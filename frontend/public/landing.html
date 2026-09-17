@@ -43,8 +43,10 @@ body.light-theme ::-webkit-scrollbar-thumb { background: #3b82f6; }
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 3rem;
-  background: transparent;
-  border-bottom: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.45);
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -54,7 +56,7 @@ body.light-theme ::-webkit-scrollbar-thumb { background: #3b82f6; }
   -webkit-backdrop-filter: blur(16px);
   border-bottom-color: rgba(226, 232, 240, 0.9);
   padding: 0.85rem 3rem;
-  box-shadow: 0 4px 20px -4px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.08);
 }
 
 .nav-brand {
@@ -175,23 +177,62 @@ body.light-theme ::-webkit-scrollbar-thumb { background: #3b82f6; }
   overflow: hidden;
 }
 
-/* Photorealistic atmospheric disaster background simulation */
+/* Photorealistic atmospheric disaster background simulation with subtle blur */
+.hero-photo-bg {
+  position: absolute;
+  top: -24px;
+  left: -24px;
+  right: -24px;
+  bottom: -24px;
+  background-image: url('/hero-disaster-bg.jpg');
+  background-size: cover;
+  background-position: center 25%;
+  background-repeat: no-repeat;
+  filter: blur(5px);
+  transform: scale(1.05);
+  z-index: 0;
+  opacity: 0.46;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+body.light-theme .hero-photo-bg {
+  opacity: 0.5;
+  filter: blur(5px) saturate(1.15);
+}
+
+.hero-photo-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: 
+    radial-gradient(ellipse 95% 75% at 50% 32%, rgba(248, 250, 252, 0.65) 0%, rgba(248, 250, 252, 0.85) 55%, #f8fafc 100%),
+    linear-gradient(to bottom, rgba(248, 250, 252, 0.2) 0%, rgba(248, 250, 252, 0.68) 50%, #f8fafc 100%);
+}
+
+body:not(.light-theme) .hero-photo-overlay {
+  background: 
+    radial-gradient(ellipse 95% 75% at 50% 32%, rgba(15, 23, 42, 0.65) 0%, rgba(15, 23, 42, 0.88) 55%, #020617 100%),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.35) 0%, rgba(15, 23, 42, 0.8) 50%, #020617 100%);
+}
+
 .hero-bg-container {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 2;
   pointer-events: none;
   background: 
     radial-gradient(ellipse at 88% 18%, rgba(239, 68, 68, 0.38) 0%, rgba(249, 115, 22, 0.22) 35%, transparent 65%),
     radial-gradient(ellipse at 12% 82%, rgba(2, 132, 199, 0.4) 0%, rgba(37, 99, 235, 0.28) 40%, transparent 70%),
-    radial-gradient(ellipse at 50% 50%, rgba(15, 23, 42, 0.95) 0%, #020617 100%);
+    transparent;
 }
 
 body.light-theme .hero-bg-container {
   background: 
-    radial-gradient(ellipse at 88% 18%, rgba(239, 68, 68, 0.16) 0%, rgba(249, 115, 22, 0.09) 35%, transparent 65%),
-    radial-gradient(ellipse at 12% 82%, rgba(2, 132, 199, 0.2) 0%, rgba(37, 99, 235, 0.12) 40%, transparent 70%),
-    radial-gradient(ellipse at 50% 50%, rgba(248, 250, 252, 0.92) 0%, #f1f5f9 100%);
+    radial-gradient(ellipse at 88% 18%, rgba(239, 68, 68, 0.14) 0%, rgba(249, 115, 22, 0.08) 35%, transparent 65%),
+    radial-gradient(ellipse at 12% 82%, rgba(2, 132, 199, 0.16) 0%, rgba(37, 99, 235, 0.1) 40%, transparent 70%),
+    transparent;
 }
 
 .fire-hazard-glow {
@@ -276,16 +317,18 @@ body.light-theme .hero-bg-container {
   border-radius: 9999px;
   background: rgba(37, 99, 235, 0.12);
   border: 1px solid rgba(59, 130, 246, 0.35);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: #93c5fd;
   font-size: 0.85rem;
   font-weight: 600;
   margin-bottom: 2rem;
 }
 body.light-theme .hero-badge {
-  background: rgba(37, 99, 235, 0.08);
-  border-color: rgba(37, 99, 235, 0.25);
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(37, 99, 235, 0.28);
   color: #1d4ed8;
+  box-shadow: 0 4px 20px -2px rgba(37, 99, 235, 0.12);
 }
 
 .pulse-dot {
@@ -308,18 +351,20 @@ body.light-theme .hero-badge {
   letter-spacing: -0.03em;
   margin-bottom: 1.5rem;
   color: #ffffff;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
 }
 body.light-theme .hero-heading {
   color: #0f172a;
+  text-shadow: 0 2px 20px rgba(255, 255, 255, 0.95), 0 0 40px rgba(255, 255, 255, 0.85);
 }
 
 .hero-heading .gradient-flood {
-  background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
+  background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .hero-heading .gradient-fire {
-  background: linear-gradient(135deg, #f97316 0%, #ef4444 100%);
+  background: linear-gradient(135deg, #ea580c 0%, #dc2626 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -332,7 +377,9 @@ body.light-theme .hero-heading {
   line-height: 1.7;
 }
 body.light-theme .hero-subtext {
-  color: #475569;
+  color: #1e293b;
+  font-weight: 500;
+  text-shadow: 0 1px 12px rgba(255, 255, 255, 0.95);
 }
 
 /* Hero Action Buttons - Useful Only */
@@ -848,6 +895,9 @@ footer {
 
 <!-- HERO SECTION -->
 <section id="hero">
+  <!-- Photorealistic Flood & Wildfire Early Detection Background with Slight Blur -->
+  <div class="hero-photo-bg"></div>
+  <div class="hero-photo-overlay"></div>
   <div class="hero-bg-container"></div>
   <div class="fire-hazard-glow"></div>
   <div class="flood-hazard-glow"></div>
