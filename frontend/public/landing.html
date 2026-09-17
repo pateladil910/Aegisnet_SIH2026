@@ -1043,7 +1043,25 @@ window.addEventListener('scroll', () => {
   });
   navLinks.forEach(link => {
     link.style.color = link.getAttribute('href') === '#' + current ? '#f1f5f9' : '';
-  });
+// ── Top-level navigation for app links when embedded in iframe ──
+document.querySelectorAll('a').forEach(a => {
+  const href = a.getAttribute('href');
+  if (href && (href.startsWith('/') || href.includes('localhost:5180') || href.includes('localhost:5001'))) {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      try {
+        const url = new URL(a.href, window.location.origin);
+        const targetUrl = url.pathname + url.search + url.hash;
+        if (window.top && window.top !== window) {
+          window.top.location.href = targetUrl;
+        } else {
+          window.location.href = targetUrl;
+        }
+      } catch (err) {
+        window.location.href = a.href;
+      }
+    });
+  }
 });
 </script>
 </body>

@@ -8,6 +8,7 @@ import { AlertHistoryPage } from './pages/AlertHistoryPage';
 import { ThresholdConfigPage } from './pages/ThresholdConfigPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
 import { LoginPage } from './pages/LoginPage';
+import { LandingPage } from './pages/LandingPage';
 import { apiClient } from './lib/apiClient';
 import { getSocket } from './lib/socket';
 import { AegisNode, AlertItem, SensorReading } from './types';
@@ -101,15 +102,29 @@ export const App: React.FC = () => {
     }
   };
 
+  const isAuthenticated = () => Boolean(localStorage.getItem('aegisnet_token'));
+
   return (
     <Router>
       <Routes>
+        {/* Direct Landing Page — opened on root when not logged in */}
+        <Route
+          path="/"
+          element={
+            isAuthenticated() ? <Navigate to="/dashboard" replace /> : <LandingPage />
+          }
+        />
+
+        {/* Always accessible standalone landing page */}
+        <Route path="/landing" element={<LandingPage />} />
+
         {/* Standalone login — no AppShell wrapper */}
         <Route path="/login" element={<LoginPage />} />
 
         {/* All other pages share the AppShell layout */}
         <Route element={<AppShell connected={connected} onRefresh={fetchInitialData} />}>
-          <Route path="/" element={<PublicMap nodes={nodes} alerts={alerts} />} />
+          <Route path="/map" element={<PublicMap nodes={nodes} alerts={alerts} />} />
+          <Route path="/public-map" element={<PublicMap nodes={nodes} alerts={alerts} />} />
           <Route
             path="/dashboard"
             element={
@@ -132,7 +147,12 @@ export const App: React.FC = () => {
           />
           <Route path="/settings/thresholds" element={<ThresholdConfigPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route
+            path="*"
+            element={
+              <Navigate to={isAuthenticated() ? '/dashboard' : '/'} replace />
+            }
+          />
         </Route>
       </Routes>
     </Router>

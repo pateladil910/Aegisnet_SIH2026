@@ -11,7 +11,9 @@ import {
   Flame, 
   Waves, 
   Wind,
-  CheckCircle2
+  CheckCircle2,
+  Compass,
+  LogOut
 } from 'lucide-react';
 import { apiClient } from '../../lib/apiClient';
 
@@ -83,7 +85,7 @@ export const Navbar: React.FC<NavbarProps> = ({ connected, onSimulationTriggered
               <Activity className="w-3.5 h-3.5 text-blue-400" />
               <span>Command Ops</span>
             </NavLink>
-            <NavLink to="/" className={navItemClass}>
+            <NavLink to="/map" className={navItemClass}>
               <MapIcon className="w-3.5 h-3.5 text-cyan-400" />
               <span>Public Map</span>
             </NavLink>
@@ -98,6 +100,10 @@ export const Navbar: React.FC<NavbarProps> = ({ connected, onSimulationTriggered
             <NavLink to="/settings/thresholds" className={navItemClass}>
               <Sliders className="w-3.5 h-3.5 text-amber-400" />
               <span>Thresholds</span>
+            </NavLink>
+            <NavLink to="/landing" className={navItemClass}>
+              <Compass className="w-3.5 h-3.5 text-indigo-400" />
+              <span>Landing Page</span>
             </NavLink>
           </nav>
         </div>
@@ -149,6 +155,20 @@ export const Navbar: React.FC<NavbarProps> = ({ connected, onSimulationTriggered
               {connected ? 'MESH ONLINE' : 'DISCONNECTED'}
             </span>
           </div>
+
+          {/* Logout button */}
+          <button
+            onClick={() => {
+              localStorage.removeItem('aegisnet_token');
+              localStorage.removeItem('aegisnet_user');
+              window.location.href = '/';
+            }}
+            title="Log out and return to Landing Page"
+            className="text-xs flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-900 hover:bg-red-950/60 text-slate-400 hover:text-red-300 border border-slate-800 hover:border-red-800/60 transition-all cursor-pointer"
+          >
+            <LogOut className="w-3 h-3 text-slate-400" />
+            <span className="hidden sm:inline">Logout</span>
+          </button>
         </div>
       </div>
     </header>
