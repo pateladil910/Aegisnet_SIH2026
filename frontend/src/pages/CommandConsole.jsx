@@ -89,28 +89,28 @@ export default function CommandConsole() {
   return (
     <div className="max-w-7xl mx-auto px-4 lg:px-6 py-6 space-y-6 font-sans">
       {/* ─── 1. Incident Command Header Strip ───────────────────────────── */}
-      <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
+      <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.05)] space-y-4">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 flex items-center justify-center text-2xl font-bold flex-shrink-0 shadow-sm">
+            <div className="w-12 h-12 rounded-2xl bg-red-50 border border-red-200 text-red-600 flex items-center justify-center text-2xl font-bold flex-shrink-0 shadow-xs">
               🎛️
             </div>
             <div>
               <div className="flex items-center gap-2.5 flex-wrap">
-                <span className="text-xs font-mono font-bold uppercase px-3 py-1 rounded-full bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20 animate-pulse">
+                <span className="text-xs font-mono font-bold uppercase px-3 py-1 rounded-full bg-red-50 text-red-700 border border-red-200 animate-pulse">
                   ACTIVE COMMAND INCIDENT: {activeAlert.id}
                 </span>
-                <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
-                  Confidence: <b className="text-blue-600 dark:text-cyan-400">{activeAlert.confidence_pct}%</b>
+                <span className="text-xs text-slate-500 font-mono">
+                  Confidence: <b className="text-blue-600">{activeAlert.confidence_pct}%</b>
                 </span>
-                <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
-                  Duration: <b className="text-slate-700 dark:text-slate-300">{activeAlert.timestamp}</b>
+                <span className="text-xs text-slate-500 font-mono">
+                  Duration: <b className="text-slate-700">{activeAlert.timestamp}</b>
                 </span>
               </div>
-              <h1 className="text-xl font-bold text-slate-900 dark:text-white mt-1.5">{activeAlert.title}</h1>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-mono flex items-center gap-1.5 mt-1">
+              <h1 className="text-xl font-extrabold text-slate-900 tracking-tight mt-1.5">{activeAlert.title}</h1>
+              <p className="text-xs text-slate-500 font-mono flex items-center gap-1.5 mt-1">
                 <span>📍 Zone:</span>
-                <span className="text-slate-800 dark:text-slate-200 font-semibold">{activeAlert.location}</span>
+                <span className="text-slate-800 font-semibold">{activeAlert.location}</span>
               </p>
             </div>
           </div>
@@ -118,13 +118,13 @@ export default function CommandConsole() {
           <div className="flex items-center gap-2.5 flex-wrap">
             <button
               onClick={escalateAllAgencies}
-              className="bg-red-600 hover:bg-red-700 text-white text-xs font-bold font-mono px-4 py-2.5 rounded-full shadow-md shadow-red-500/20 transition-all flex items-center gap-2"
+              className="bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white text-xs font-bold font-mono px-4 py-2.5 rounded-full shadow-md shadow-red-500/20 transition-all flex items-center gap-2"
             >
               <span>⚡</span> Escalate All Agencies
             </button>
             <button
               onClick={handleResolveIncident}
-              className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold font-mono px-4 py-2.5 rounded-full shadow-xs transition-all"
+              className="bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-blue-600 text-xs font-bold font-mono px-4 py-2.5 rounded-full shadow-xs transition-all"
             >
               Resolve & Archive
             </button>
@@ -133,17 +133,17 @@ export default function CommandConsole() {
       </div>
 
       {/* ─── 2. Multi-Agency Dispatch Board (Kanban) ─────────────────────── */}
-      <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
-        <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+      <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.05)] space-y-4">
+        <div className="flex items-center justify-between border-b border-slate-100 pb-4">
           <div>
-            <h2 className="text-sm font-bold text-slate-900 dark:text-white uppercase font-mono tracking-wide">
+            <h2 className="text-sm font-extrabold text-slate-900 uppercase font-mono tracking-wide">
               Multi-Agency Dispatch Board (Automated SLA Flow)
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-slate-500">
               Live status tracking across GSDMA, Fire, Municipal, Police, and EMS units
             </p>
           </div>
-          <span className="text-xs text-emerald-600 dark:text-emerald-400 font-mono font-bold bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">
+          <span className="text-xs text-emerald-700 font-mono font-bold bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full shadow-xs">
             SLA Engine Active
           </span>
         </div>
@@ -156,12 +156,12 @@ export default function CommandConsole() {
             return (
               <div
                 key={stage}
-                className="bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 rounded-2xl p-3.5 flex flex-col justify-between min-h-[240px]"
+                className="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-3.5 flex flex-col justify-between min-h-[240px]"
               >
                 <div>
-                  <div className="flex items-center justify-between pb-2.5 border-b border-slate-200 dark:border-slate-700/60 mb-3">
-                    <span className="text-xs font-bold font-mono text-slate-900 dark:text-white">{stage}</span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold border border-slate-200 dark:border-slate-600">
+                  <div className="flex items-center justify-between pb-2.5 border-b border-slate-200 mb-3">
+                    <span className="text-xs font-bold font-mono text-slate-900">{stage}</span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white text-slate-700 font-bold border border-slate-200 shadow-xs">
                       {items.length}
                     </span>
                   </div>
@@ -170,18 +170,18 @@ export default function CommandConsole() {
                     {items.map((item) => (
                       <div
                         key={item.agency}
-                        className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 rounded-2xl p-3 shadow-xs text-xs space-y-2"
+                        className="bg-white border border-slate-200/90 hover:border-blue-300 rounded-2xl p-3 shadow-xs hover:shadow-sm text-xs space-y-2 transition-all"
                       >
-                        <div className="font-bold text-slate-900 dark:text-white leading-tight">{item.agency}</div>
-                        <div className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">{item.channel}</div>
+                        <div className="font-bold text-slate-900 leading-tight">{item.agency}</div>
+                        <div className="text-[10px] text-slate-500 font-mono">{item.channel}</div>
                         {item.officer && (
-                          <div className="text-[10px] text-blue-600 dark:text-cyan-400 font-mono font-semibold">
+                          <div className="text-[10px] text-blue-600 font-mono font-semibold">
                             👤 {item.officer}
                           </div>
                         )}
                         <button
                           onClick={() => advanceDispatchStage(item.agency)}
-                          className="w-full mt-1 bg-slate-100 hover:bg-blue-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-blue-600 dark:text-cyan-400 text-[10px] font-mono font-bold py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 transition-colors"
+                          className="w-full mt-1 bg-blue-50/80 hover:bg-blue-100 text-blue-700 text-[10px] font-mono font-bold py-1.5 rounded-xl border border-blue-200/80 transition-colors shadow-xs"
                         >
                           Advance Stage →
                         </button>
@@ -191,7 +191,7 @@ export default function CommandConsole() {
                 </div>
 
                 {items.length === 0 && (
-                  <div className="text-center py-8 text-[11px] text-slate-400 dark:text-slate-500 font-mono">
+                  <div className="text-center py-8 text-[11px] text-slate-400 font-mono">
                     No agencies in stage
                   </div>
                 )}
@@ -204,20 +204,20 @@ export default function CommandConsole() {
       {/* ─── 3. Split: Public Advisory Composer & Operational Incident Log ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Public Advisory Composer */}
-        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.05)] space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <div>
-              <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <h3 className="font-extrabold text-sm text-slate-900 flex items-center gap-2">
                 <span>🌐</span> Public Advisory Composer
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-xs text-slate-500">
                 Review and approve citizen warning before pushing to public portal
               </p>
             </div>
             <Link
               to="/public"
               target="_blank"
-              className="text-xs text-blue-600 dark:text-cyan-400 hover:underline font-mono font-bold"
+              className="text-xs text-blue-600 hover:underline font-mono font-bold"
             >
               Open Public Portal ↗
             </Link>
@@ -225,54 +225,54 @@ export default function CommandConsole() {
 
           <div className="space-y-3.5 text-xs">
             <div>
-              <label className="text-slate-600 dark:text-slate-300 font-mono block mb-1 font-bold">Affected Locality / Zone</label>
+              <label className="text-slate-700 font-mono block mb-1 font-bold">Affected Locality / Zone</label>
               <input
                 type="text"
                 value={advisoryZone}
                 onChange={(e) => setAdvisoryZone(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-white font-medium focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-900 font-medium focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-all"
               />
             </div>
 
             <div>
-              <label className="text-slate-600 dark:text-slate-300 font-mono block mb-1 font-bold">
+              <label className="text-slate-700 font-mono block mb-1 font-bold">
                 English Advisory Text (Plain Language)
               </label>
               <textarea
                 rows={2}
                 value={advisoryEn}
                 onChange={(e) => setAdvisoryEn(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-all"
               />
             </div>
 
             <div>
-              <label className="text-slate-600 dark:text-slate-300 font-mono block mb-1 font-bold">
+              <label className="text-slate-700 font-mono block mb-1 font-bold">
                 Gujarati Translation (ગુજરાતી)
               </label>
               <textarea
                 rows={2}
                 value={advisoryGu}
                 onChange={(e) => setAdvisoryGu(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-all"
               />
             </div>
 
             <div>
-              <label className="text-slate-600 dark:text-slate-300 font-mono block mb-1 font-bold">
+              <label className="text-slate-700 font-mono block mb-1 font-bold">
                 Hindi Translation (हिन्दी)
               </label>
               <textarea
                 rows={2}
                 value={advisoryHi}
                 onChange={(e) => setAdvisoryHi(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-all"
               />
             </div>
 
             <button
               onClick={handlePublishAdvisory}
-              className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-bold py-3 rounded-full font-mono transition-all shadow-md shadow-blue-500/20 flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-blue-600 via-sky-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-bold py-3 rounded-full font-mono transition-all shadow-md shadow-blue-500/25 flex items-center justify-center gap-2"
             >
               <span>📢</span>
               <span>{advisoryPublished ? '✓ Advisory Broadcasted!' : 'Authorize & Broadcast Public Advisory'}</span>
@@ -281,41 +281,41 @@ export default function CommandConsole() {
         </div>
 
         {/* Real-Time Operational Incident Log */}
-        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4 flex flex-col justify-between">
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.05)] space-y-4 flex flex-col justify-between">
           <div>
-            <div className="border-b border-slate-200 dark:border-slate-800 pb-3 mb-3">
-              <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+            <div className="border-b border-slate-100 pb-3 mb-3">
+              <h3 className="font-extrabold text-sm text-slate-900 flex items-center gap-2">
                 <span>📝</span> Shared Multi-Agency Incident Log
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-xs text-slate-500">
                 Live operational audit entries visible across Police, Fire, Municipal, and GSDMA
               </p>
             </div>
 
             <div className="space-y-2.5 max-h-72 overflow-y-auto pr-1">
               {incidentNotes.map((note) => (
-                <div key={note.id} className="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 p-3.5 rounded-2xl text-xs space-y-1">
-                  <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 dark:text-slate-400">
-                    <span className="font-bold text-blue-600 dark:text-cyan-400">{note.user}</span>
+                <div key={note.id} className="bg-[#f8fafc] border border-slate-200/90 p-3.5 rounded-2xl text-xs space-y-1">
+                  <div className="flex items-center justify-between text-[10px] font-mono text-slate-500">
+                    <span className="font-bold text-blue-600">{note.user}</span>
                     <span>{note.time}</span>
                   </div>
-                  <p className="text-slate-800 dark:text-slate-200">{note.text}</p>
+                  <p className="text-slate-800">{note.text}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <form onSubmit={handleAddNote} className="pt-4 border-t border-slate-200 dark:border-slate-800 flex gap-2">
+          <form onSubmit={handleAddNote} className="pt-4 border-t border-slate-100 flex gap-2">
             <input
               type="text"
               value={newNote}
               onChange={(e) => setNewNote(e.target.value)}
               placeholder="Add an operational update to the incident record..."
-              className="flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+              className="flex-1 bg-slate-50 border border-slate-200 rounded-full px-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
             />
             <button
               type="submit"
-              className="bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white px-5 py-2.5 rounded-full text-xs font-mono font-bold transition-all shadow-xs"
+              className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-5 py-2.5 rounded-full text-xs font-mono font-bold transition-all shadow-sm shadow-blue-500/20"
             >
               Post
             </button>

@@ -11,26 +11,18 @@
   --card-border: #e2e8f0;
 }
 
-.dark {
-  --bg-main: #020617;
-  --text-main: #f1f5f9;
-  --card-bg: #0f172a;
-  --card-border: #1e293b;
-}
-
 body {
-  background: var(--bg-main);
-  color: var(--text-main);
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(circle at 15% 10%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(6, 182, 212, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(37, 99, 235, 0.03) 0%, transparent 50%);
+  background-attachment: fixed;
+  color: #0f172a;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.dark body {
-  background: #020617;
-  color: #f1f5f9;
 }
 
 /* Gradient Utilities */
@@ -53,10 +45,78 @@ body {
 /* Card and Rounded Design Rules - No sharp squares! */
 .card-rounded {
   border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 .card-rounded:hover {
+  transform: translateY(-3px);
+  border-color: rgba(37, 99, 235, 0.35);
   box-shadow: 0 16px 36px -8px rgba(37, 99, 235, 0.12);
+}
+
+.aegis-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.aegis-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(37, 99, 235, 0.35);
+  box-shadow: 0 15px 35px -5px rgba(37, 99, 235, 0.12);
+}
+
+.aegis-pill {
+  border-radius: 9999px;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.aegis-btn-primary {
+  background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+  color: #ffffff;
+  border-radius: 9999px;
+  font-weight: 700;
+  box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+  transition: all 0.25s ease;
+}
+.aegis-btn-primary:hover {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 0 15px 30px -5px rgba(37, 99, 235, 0.4);
+}
+
+.aegis-btn-secondary {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  color: #0f172a;
+  border-radius: 9999px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  transition: all 0.2s ease;
+}
+.aegis-btn-secondary:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #2563eb;
+}
+
+.aegis-input {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  color: #0f172a;
+  transition: all 0.2s ease;
+}
+.aegis-input:focus {
+  background: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+  outline: none;
 }
 
 .pill-rounded {

@@ -52,7 +52,7 @@ function AppLayout({ children }) {
   // Standalone pages — completely standalone, no header/footer/overlays
   if (isLoginRoute || isLandingRoute) {
     return (
-      <div className={clsx("min-h-screen font-sans", theme === 'dark' ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-900")}>
+      <div className="min-h-screen font-sans bg-[#f8fafc] text-slate-900">
         {children}
       </div>
     )
@@ -60,7 +60,8 @@ function AppLayout({ children }) {
 
   return (
     <div className={clsx(
-      'bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-300',
+      'bg-[#f8fafc] text-slate-900 flex flex-col font-sans transition-colors duration-300',
+      'bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(37,99,235,0.07),rgba(255,255,255,0))]',
       isMapRoute ? 'h-screen overflow-hidden' : 'min-h-screen'
     )}>
       {/* Complete Top Navbar — Visible on all pages including Map & Public Portal */}

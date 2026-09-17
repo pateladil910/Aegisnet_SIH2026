@@ -93,16 +93,16 @@ export default function FleetPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 lg:px-6 py-6 space-y-6 font-sans">
       {/* ─── 1. Header Strip ─────────────────────────────────────────────── */}
-      <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.05)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-cyan-400 flex items-center justify-center text-2xl font-bold flex-shrink-0 shadow-sm">
+          <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center text-2xl font-bold flex-shrink-0 shadow-xs">
             🛰️
           </div>
           <div>
-            <h1 className="text-xl font-bold text-slate-900 dark:text-white">
+            <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">
               Hardware Fleet & <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Provisioning</span>
             </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+            <p className="text-xs text-slate-500 font-mono">
               Qualcomm Edge-AI Sentinel Grid • Gujarat State Deployment
             </p>
           </div>
@@ -111,19 +111,19 @@ export default function FleetPage() {
         <div className="flex items-center gap-2.5 flex-wrap">
           <button
             onClick={() => setShowAddModal(true)}
-            className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white text-xs font-bold font-mono px-4 py-2.5 rounded-full transition-all shadow-md shadow-blue-500/20 flex items-center gap-1.5"
+            className="bg-gradient-to-r from-blue-600 via-sky-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white text-xs font-bold font-mono px-5 py-2.5 rounded-full transition-all shadow-md shadow-blue-500/25 flex items-center gap-1.5 hover:scale-[1.02] active:scale-[0.98]"
           >
             <span>+</span> Provision New Node
           </button>
           <button
             onClick={handleBulkOTA}
-            className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold font-mono px-4 py-2.5 rounded-full transition-all"
+            className="bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-blue-600 text-xs font-bold font-mono px-4 py-2.5 rounded-full transition-all shadow-xs"
           >
             {bulkOtaSuccess ? '✓ OTA Deployed' : 'OTA Firmware Push'}
           </button>
           <button
             onClick={handleExportCSV}
-            className="bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-xs font-mono px-4 py-2.5 rounded-full transition-all"
+            className="bg-white hover:bg-slate-50 border border-slate-200 text-slate-600 hover:text-slate-900 text-xs font-mono px-4 py-2.5 rounded-full transition-all shadow-xs"
           >
             Export CSV
           </button>
@@ -132,36 +132,36 @@ export default function FleetPage() {
 
       {/* ─── 2. Fleet Health KPI Strip ──────────────────────────────────── */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3.5">
-        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
-          <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">Total Deployed</div>
-          <div className="text-2xl font-bold text-slate-900 dark:text-white font-mono mt-1">{totalNodes}</div>
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs hover:border-blue-300 hover:shadow-sm transition-all">
+          <div className="text-[11px] text-slate-500 font-mono">Total Deployed</div>
+          <div className="text-2xl font-bold text-slate-900 font-mono mt-1">{totalNodes}</div>
         </div>
-        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
-          <div className="text-[11px] text-emerald-600 dark:text-emerald-400 font-mono">Online Primary</div>
-          <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 font-mono mt-1">{onlineCount}</div>
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs hover:border-emerald-300 hover:shadow-sm transition-all">
+          <div className="text-[11px] text-emerald-600 font-mono">Online Primary</div>
+          <div className="text-2xl font-bold text-emerald-600 font-mono mt-1">{onlineCount}</div>
         </div>
-        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
-          <div className="text-[11px] text-amber-600 dark:text-amber-400 font-mono">LoRa Mesh Fallback</div>
-          <div className="text-2xl font-bold text-amber-600 dark:text-amber-400 font-mono mt-1">{degradedCount}</div>
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs hover:border-amber-300 hover:shadow-sm transition-all">
+          <div className="text-[11px] text-amber-600 font-mono">LoRa Mesh Fallback</div>
+          <div className="text-2xl font-bold text-amber-600 font-mono mt-1">{degradedCount}</div>
         </div>
-        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
-          <div className="text-[11px] text-slate-400 dark:text-slate-500 font-mono">Offline / Maintenance</div>
-          <div className="text-2xl font-bold text-slate-500 dark:text-slate-400 font-mono mt-1">{offlineCount}</div>
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs hover:border-slate-300 hover:shadow-sm transition-all">
+          <div className="text-[11px] text-slate-400 font-mono">Offline / Maintenance</div>
+          <div className="text-2xl font-bold text-slate-500 font-mono mt-1">{offlineCount}</div>
         </div>
-        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
-          <div className="text-[11px] text-blue-600 dark:text-cyan-400 font-mono">Fleet Avg Battery</div>
-          <div className="text-2xl font-bold text-blue-600 dark:text-cyan-400 font-mono mt-1">{avgBattery}%</div>
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs hover:border-blue-300 hover:shadow-sm transition-all">
+          <div className="text-[11px] text-blue-600 font-mono">Fleet Avg Battery</div>
+          <div className="text-2xl font-bold text-blue-600 font-mono mt-1">{avgBattery}%</div>
         </div>
       </div>
 
       {/* ─── 3. Filter Bar ──────────────────────────────────────────────── */}
-      <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 shadow-xs flex flex-col md:flex-row gap-3 items-center justify-between text-xs">
+      <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs flex flex-col md:flex-row gap-3 items-center justify-between text-xs">
         <div className="flex items-center gap-2.5 flex-wrap w-full md:w-auto">
           {/* Region filter */}
           <select
             value={filterRegion}
             onChange={(e) => setFilterRegion(e.target.value)}
-            className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-white font-mono focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+            className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 font-mono focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none"
           >
             <option value="all">All Regions</option>
             {REGIONS.filter((r) => r.id !== 'all').map((r) => (
@@ -175,7 +175,7 @@ export default function FleetPage() {
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-white font-mono focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+            className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 font-mono focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none"
           >
             <option value="all">All Statuses</option>
             <option value="online">Online</option>
@@ -190,15 +190,15 @@ export default function FleetPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Filter by node ID, location, or firmware..."
-          className="w-full md:w-72 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+          className="w-full md:w-72 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
         />
       </div>
 
       {/* ─── 4. Fleet Data Grid ─────────────────────────────────────────── */}
-      <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-3xl shadow-sm overflow-hidden">
+      <div className="bg-white border border-slate-200/90 rounded-3xl shadow-[0_4px_20px_-2px_rgba(15,23,42,0.05)] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-sans">
-            <thead className="bg-slate-50 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 font-mono uppercase text-[10px] border-b border-slate-200 dark:border-slate-800">
+            <thead className="bg-slate-50/90 text-slate-600 font-mono uppercase text-[10px] font-bold border-b border-slate-200/90">
               <tr>
                 <th className="p-4">Node ID</th>
                 <th className="p-4">Category & Sensor</th>
@@ -210,40 +210,40 @@ export default function FleetPage() {
                 <th className="p-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200/80 dark:divide-slate-800">
+            <tbody className="divide-y divide-slate-100">
               {filteredNodes.map((node) => {
                 const isOnline = node.status === 'online'
                 const isMuted = node.status === 'muted'
 
                 return (
-                  <tr key={node.node_id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="p-4 font-mono font-bold text-slate-900 dark:text-white">
-                      <Link to={`/nodes/${node.node_id}`} className="text-blue-600 dark:text-cyan-400 hover:underline">
+                  <tr key={node.node_id} className="hover:bg-blue-50/40 transition-colors">
+                    <td className="p-4 font-mono font-bold text-slate-900">
+                      <Link to={`/nodes/${node.node_id}`} className="text-blue-600 hover:underline">
                         {node.node_id}
                       </Link>
                     </td>
                     <td className="p-4">
-                      <div className="font-semibold text-slate-900 dark:text-white">{node.sensor_type}</div>
-                      <div className="text-[10px] text-slate-500 dark:text-slate-400 font-mono uppercase">{node.category}</div>
+                      <div className="font-semibold text-slate-900">{node.sensor_type}</div>
+                      <div className="text-[10px] text-slate-500 font-mono uppercase">{node.category}</div>
                     </td>
-                    <td className="p-4 truncate max-w-xs text-slate-600 dark:text-slate-300">
-                      <div className="text-slate-900 dark:text-white font-medium">{node.location}</div>
-                      <div className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
+                    <td className="p-4 truncate max-w-xs text-slate-600">
+                      <div className="text-slate-900 font-medium">{node.location}</div>
+                      <div className="text-[10px] font-mono text-slate-400">
                         {node.latitude.toFixed(4)}°N, {node.longitude.toFixed(4)}°E
                       </div>
                     </td>
-                    <td className="p-4 font-mono text-[11px] text-slate-800 dark:text-slate-200">
+                    <td className="p-4 font-mono text-[11px] text-slate-700">
                       {node.connectivity}
                     </td>
                     <td className="p-4 font-mono">
-                      <span className={clsx(node.battery_pct < 40 ? 'text-red-600 dark:text-red-400 font-bold' : 'text-emerald-600 dark:text-emerald-400')}>
+                      <span className={clsx(node.battery_pct < 40 ? 'text-red-600 font-bold' : 'text-emerald-600')}>
                         {node.battery_pct}%
                       </span>
-                      <span className="text-[10px] text-slate-500 dark:text-slate-400 ml-1">
+                      <span className="text-[10px] text-slate-500 ml-1">
                         {node.solar_charging ? '☀️ Solar' : '🔋 Li-Ion'}
                       </span>
                     </td>
-                    <td className="p-4 font-mono text-[11px] text-slate-500 dark:text-slate-400">
+                    <td className="p-4 font-mono text-[11px] text-slate-500">
                       {node.firmware_version}
                     </td>
                     <td className="p-4">
@@ -251,10 +251,10 @@ export default function FleetPage() {
                         className={clsx(
                           'px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold inline-block',
                           isMuted
-                            ? 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                            ? 'bg-slate-100 text-slate-600'
                             : isOnline
-                            ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400'
-                            : 'bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400'
+                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                            : 'bg-red-50 text-red-700 border border-red-200'
                         )}
                       >
                         {isMuted ? 'Muted' : isOnline ? 'Online' : 'Degraded'}
@@ -264,13 +264,13 @@ export default function FleetPage() {
                       <div className="flex items-center justify-end gap-3">
                         <button
                           onClick={() => muteNode(node.node_id)}
-                          className="text-[11px] text-slate-500 hover:text-slate-900 dark:hover:text-white underline font-mono"
+                          className="text-[11px] text-slate-500 hover:text-slate-900 underline font-mono"
                         >
                           {isMuted ? 'Unmute' : 'Mute'}
                         </button>
                         <Link
                           to={`/nodes/${node.node_id}`}
-                          className="text-[11px] text-blue-600 dark:text-cyan-400 hover:underline font-mono font-bold"
+                          className="text-[11px] text-blue-600 hover:underline font-mono font-bold"
                         >
                           Telemetry →
                         </Link>
@@ -286,35 +286,35 @@ export default function FleetPage() {
 
       {/* ─── Add Node Provisioning Modal ─────────────────────────────────── */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 backdrop-blur-md p-4 animate-fade-in font-sans">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 w-full max-w-lg shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-              <h3 className="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 backdrop-blur-md p-4 animate-fade-in font-sans">
+          <div className="bg-white border border-slate-200/90 rounded-3xl p-6 w-full max-w-lg shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h3 className="font-bold text-base text-slate-900 flex items-center gap-2">
                 <span>🛰️</span> Provision Qualcomm Edge-AI Node
               </h3>
-              <button onClick={() => setShowAddModal(false)} className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">✕</button>
+              <button onClick={() => setShowAddModal(false)} className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors">✕</button>
             </div>
 
             <form onSubmit={handleAddNodeSubmit} className="space-y-3.5 text-xs">
               <div>
-                <label className="text-slate-600 dark:text-slate-300 font-mono block mb-1 font-bold">Node Display Name</label>
+                <label className="text-slate-700 font-mono block mb-1 font-bold">Node Display Name</label>
                 <input
                   type="text"
                   required
                   value={newNodeName}
                   onChange={(e) => setNewNodeName(e.target.value)}
                   placeholder="e.g. Sabarmati Vasna Barrage Sensor"
-                  className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-all"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-slate-600 dark:text-slate-300 font-mono block mb-1 font-bold">Gujarat Region</label>
+                  <label className="text-slate-700 font-mono block mb-1 font-bold">Gujarat Region</label>
                   <select
                     value={newNodeRegion}
                     onChange={(e) => setNewNodeRegion(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none"
                   >
                     {REGIONS.filter((r) => r.id !== 'all').map((r) => (
                       <option key={r.id} value={r.id}>{r.name}</option>
@@ -322,11 +322,11 @@ export default function FleetPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-slate-600 dark:text-slate-300 font-mono block mb-1 font-bold">Sensor Bay Category</label>
+                  <label className="text-slate-700 font-mono block mb-1 font-bold">Sensor Bay Category</label>
                   <select
                     value={newNodeCategory}
                     onChange={(e) => setNewNodeCategory(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none"
                   >
                     {SENSOR_CATEGORIES.map((c) => (
                       <option key={c.id} value={c.id}>{c.icon} {c.name}</option>
@@ -336,36 +336,36 @@ export default function FleetPage() {
               </div>
 
               <div>
-                <label className="text-slate-600 dark:text-slate-300 font-mono block mb-1 font-bold">Location Description / Landmark</label>
+                <label className="text-slate-700 font-mono block mb-1 font-bold">Location Description / Landmark</label>
                 <input
                   type="text"
                   required
                   value={newNodeLocation}
                   onChange={(e) => setNewNodeLocation(e.target.value)}
                   placeholder="e.g. Near Vasna Barrage Sluice Gate 14"
-                  className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-all"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-slate-600 dark:text-slate-300 font-mono block mb-1 font-bold">Latitude (°N)</label>
+                  <label className="text-slate-700 font-mono block mb-1 font-bold">Latitude (°N)</label>
                   <input
                     type="number"
                     step="0.0001"
                     value={newNodeLat}
                     onChange={(e) => setNewNodeLat(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="text-slate-600 dark:text-slate-300 font-mono block mb-1 font-bold">Longitude (°E)</label>
+                  <label className="text-slate-700 font-mono block mb-1 font-bold">Longitude (°E)</label>
                   <input
                     type="number"
                     step="0.0001"
                     value={newNodeLng}
                     onChange={(e) => setNewNodeLng(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none"
                   />
                 </div>
               </div>
@@ -373,14 +373,14 @@ export default function FleetPage() {
               <div className="pt-2 flex gap-2">
                 <button
                   type="submit"
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-bold py-2.5 rounded-full font-mono transition-all shadow-md shadow-blue-500/20"
+                  className="flex-1 bg-gradient-to-r from-blue-600 via-sky-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-bold py-2.5 rounded-full font-mono transition-all shadow-md shadow-blue-500/25"
                 >
                   Register Node to Mesh
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full font-mono border border-slate-200 dark:border-slate-700 transition-colors"
+                  className="px-5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full font-mono border border-slate-200 transition-colors"
                 >
                   Cancel
                 </button>

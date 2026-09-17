@@ -58,15 +58,15 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex font-sans overflow-hidden bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <div className="min-h-screen flex font-sans overflow-hidden bg-[#f8fafc] text-slate-900">
 
-      {/* ── LEFT PANEL — Atmospheric Disaster Early Detection Branding (Luminous Light Theme) ────── */}
-      <div className="hidden lg:flex lg:w-[50%] bg-gradient-to-br from-blue-50/80 via-sky-50/60 to-indigo-50/80 dark:bg-slate-950 border-r border-slate-200/90 dark:border-slate-800 flex-col justify-between p-12 relative overflow-hidden transition-colors duration-300">
+      {/* ── LEFT PANEL — Atmospheric Disaster Early Detection Branding (Landing Reference) ────── */}
+      <div className="hidden lg:flex lg:w-[50%] bg-gradient-to-br from-blue-50/80 via-sky-50/50 to-indigo-50/70 border-r border-slate-200/90 flex-col justify-between p-12 relative overflow-hidden">
 
         {/* Ambient early detection glows */}
-        <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-rose-400/15 dark:bg-red-600/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-blue-500/15 dark:bg-blue-600/25 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-1/2 left-1/3 w-[300px] h-[300px] bg-cyan-400/15 dark:bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-rose-400/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/3 w-[300px] h-[300px] bg-cyan-400/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Top: Brand */}
         <div className="relative z-10 space-y-7">
@@ -76,25 +76,25 @@ export default function Login() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300">
+                <span className="text-xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">
                   AEGISNET
                 </span>
-                <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-500/20 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-500/40">
+                <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-blue-100/80 text-blue-800 border border-blue-200/80">
                   SIH26178
                 </span>
               </div>
-              <div className="text-slate-500 dark:text-slate-400 text-[11px] font-mono tracking-widest uppercase mt-0.5">
+              <div className="text-slate-500 text-[11px] font-mono tracking-widest uppercase mt-0.5">
                 Edge-AI Environmental Guardian
               </div>
             </div>
           </div>
 
           <div className="space-y-3">
-            <h2 className="text-slate-900 dark:text-white text-3xl font-extrabold leading-tight tracking-tight">
+            <h2 className="text-slate-900 text-3xl font-extrabold leading-tight tracking-tight">
               Early Detection for<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300">Flash Floods</span> &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-orange-500 dark:from-orange-400 dark:to-red-400">Wildfires</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Flash Floods</span> &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-orange-500">Wildfires</span>
             </h2>
-            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed max-w-sm">
+            <p className="text-slate-600 text-sm leading-relaxed max-w-sm">
               Real-time edge telemetry with TinyML on-device inference, LoRa mesh resilience, and multi-agency crisis coordination.
             </p>
           </div>
@@ -107,11 +107,11 @@ export default function Login() {
               { icon: '📡', label: `${nodes.length || 5} Edge Sensor Nodes Active`, sub: 'LoRa 433/868MHz self-healing peer mesh' },
               { icon: '⚡', label: '< 200ms On-Device TinyML', sub: 'Zero-cloud dependence during emergency power loss' },
             ].map(({ icon, label, sub }) => (
-              <div key={label} className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white/80 dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.08] backdrop-blur-md hover:border-blue-400 dark:hover:border-blue-500/40 hover:shadow-md transition-all">
+              <div key={label} className="flex items-start gap-3.5 p-4 rounded-2xl bg-white/95 border border-slate-200/90 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.05)] hover:border-blue-300 hover:shadow-[0_15px_35px_-5px_rgba(37,99,235,0.12)] transition-all">
                 <span className="text-xl leading-none mt-0.5 flex-shrink-0">{icon}</span>
                 <div>
-                  <div className="text-slate-900 dark:text-white text-xs font-bold">{label}</div>
-                  <div className="text-slate-500 dark:text-slate-400 text-[11px] mt-0.5">{sub}</div>
+                  <div className="text-slate-900 text-xs font-bold">{label}</div>
+                  <div className="text-slate-500 text-[11px] mt-0.5">{sub}</div>
                 </div>
               </div>
             ))}
@@ -120,52 +120,52 @@ export default function Login() {
 
         {/* Bottom: Live grid status */}
         <div className="relative z-10 space-y-3">
-          <div className="flex items-center gap-3 p-4 rounded-2xl bg-white/90 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-800/40 shadow-sm backdrop-blur-md">
+          <div className="flex items-center gap-3 p-4 rounded-2xl bg-white border border-blue-200/80 shadow-sm">
             <span className="relative flex h-3 w-3 flex-shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500" />
             </span>
             <div>
-              <div className="text-blue-700 dark:text-cyan-300 text-xs font-bold font-mono tracking-wide">LIVE LORA MESH ONLINE</div>
-              <div className="text-slate-500 dark:text-slate-400 text-[11px] font-mono mt-0.5">
+              <div className="text-blue-700 text-xs font-bold font-mono tracking-wide">LIVE LORA MESH ONLINE</div>
+              <div className="text-slate-500 text-[11px] font-mono mt-0.5">
                 5 Active Sensor Nodes · 0 Cloud Latency · SIH26178
               </div>
             </div>
           </div>
-          <div className="text-slate-400 dark:text-slate-500 text-[11px] font-mono">
+          <div className="text-slate-400 text-[11px] font-mono">
             Qualcomm Hardware &amp; Edge-AI Track · Smart India Hackathon 2026
           </div>
         </div>
       </div>
 
       {/* ── RIGHT PANEL — Authentication Form ──────────────────────────────── */}
-      <div className="flex-1 bg-white dark:bg-slate-900 flex flex-col justify-between transition-colors duration-300">
+      <div className="flex-1 bg-[#f8fafc] flex flex-col justify-between">
 
         {/* Top bar with back button */}
-        <div className="flex items-center justify-between px-8 py-5 border-b border-slate-100 dark:border-slate-800/80">
+        <div className="flex items-center justify-between px-8 py-5 border-b border-slate-200/80 bg-white/70 backdrop-blur-md">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors group"
+            className="inline-flex items-center gap-2.5 text-xs font-semibold text-slate-600 hover:text-blue-600 transition-colors group"
           >
-            <span className="w-8 h-8 rounded-full flex items-center justify-center border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 group-hover:border-blue-500 transition-all shadow-sm">
+            <span className="w-8 h-8 rounded-full flex items-center justify-center border border-slate-200 bg-white group-hover:border-blue-500 group-hover:text-blue-600 transition-all shadow-xs">
               ←
             </span>
-            <span>Back to Landing Page</span>
+            <span className="font-bold">Back to Landing Page</span>
           </Link>
 
-          <span className="text-[11px] font-mono font-bold text-blue-600 dark:text-cyan-400 bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-900 px-3 py-1 rounded-full">
+          <span className="text-[11px] font-mono font-bold text-blue-700 bg-blue-50 border border-blue-200/80 px-3.5 py-1 rounded-full shadow-xs">
             Command Center
           </span>
         </div>
 
         {/* Centered form card */}
         <div className="flex-1 flex items-center justify-center px-6 py-8">
-          <div className="w-full max-w-md space-y-6">
+          <div className="w-full max-w-md bg-white border border-slate-200/90 rounded-3xl p-8 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.06)] space-y-6">
 
             {/* Header */}
-            <div className="space-y-1.5">
-              <h1 className="text-slate-900 dark:text-white text-2xl sm:text-3xl font-extrabold tracking-tight">Agency Sign In</h1>
-              <p className="text-slate-500 dark:text-slate-400 text-sm">
+            <div className="space-y-1.5 text-center sm:text-left">
+              <h1 className="text-slate-900 text-2xl sm:text-3xl font-extrabold tracking-tight">Agency Sign In</h1>
+              <p className="text-slate-500 text-xs sm:text-sm">
                 Access real-time GIS monitoring, TinyML telemetry &amp; emergency dispatch.
               </p>
             </div>
@@ -175,14 +175,14 @@ export default function Login() {
 
               {/* Role selector */}
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                   Authority Role &amp; Jurisdiction
                 </label>
                 <div className="relative">
                   <select
                     value={selectedRole}
                     onChange={(e) => setSelectedRole(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all appearance-none cursor-pointer"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 transition-all appearance-none cursor-pointer font-medium"
                   >
                     {ROLES.map((r) => (
                       <option key={r.value} value={r.value}>{r.label}</option>
@@ -196,7 +196,7 @@ export default function Login() {
 
               {/* Email */}
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                   Official Email Address
                 </label>
                 <input
@@ -205,18 +205,18 @@ export default function Login() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="officer@agency.gov.in"
-                  className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium"
                 />
               </div>
 
               {/* Password */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Password</label>
+                  <label className="text-xs font-semibold text-slate-700">Password</label>
                   <button
                     type="button"
                     onClick={() => setShowPass(!showPass)}
-                    className="text-[11px] text-blue-600 dark:text-cyan-400 hover:underline font-semibold"
+                    className="text-[11px] text-blue-600 hover:underline font-semibold"
                   >
                     {showPass ? 'Hide' : 'Show'}
                   </button>
@@ -227,7 +227,7 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="••••••••"
-                  className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium"
                 />
               </div>
 
@@ -235,7 +235,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 px-4 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white text-xs font-bold rounded-full shadow-lg shadow-blue-500/25 transition-all duration-200 flex items-center justify-center gap-2 group hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60"
+                className="w-full py-3.5 px-4 bg-gradient-to-r from-blue-600 via-sky-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white text-xs font-bold rounded-full shadow-lg shadow-blue-500/25 transition-all duration-200 flex items-center justify-center gap-2 group hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60"
               >
                 {loading ? (
                   <>
@@ -252,11 +252,11 @@ export default function Login() {
             </form>
 
             {/* Quick Demo Bypass */}
-            <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+            <div className="pt-2 border-t border-slate-100">
               <button
                 type="button"
                 onClick={handleDemoBypass}
-                className="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-800 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold font-mono rounded-full transition-all flex items-center justify-center gap-2 shadow-xs"
+                className="w-full py-2.5 px-4 bg-slate-50 hover:bg-blue-50/60 border border-slate-200 text-slate-700 hover:text-blue-700 text-xs font-bold font-mono rounded-full transition-all flex items-center justify-center gap-2 shadow-xs"
               >
                 <span>⚡</span>
                 <span>Quick Demo Access (GSDMA Duty Chief)</span>
@@ -267,7 +267,7 @@ export default function Login() {
             <div className="text-center pt-1">
               <Link
                 to="/public"
-                className="text-xs text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-cyan-400 underline underline-offset-4 transition-colors"
+                className="text-xs text-slate-500 hover:text-blue-600 font-medium underline underline-offset-4 transition-colors"
               >
                 Are you a citizen looking for public safety advisories? Click here →
               </Link>
@@ -277,7 +277,7 @@ export default function Login() {
         </div>
 
         {/* Footer info */}
-        <div className="px-8 py-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500 font-mono">
+        <div className="px-8 py-4 border-t border-slate-200/80 bg-white/70 flex items-center justify-between text-[11px] text-slate-400 font-mono">
           <span>AegisNet v2.0 · SIH26178</span>
           <span>Offline-First Mesh Gateway</span>
         </div>

@@ -84,16 +84,21 @@ export default function HistoryPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 lg:px-6 py-6 space-y-6 font-sans">
       {/* ─── Header Strip ─────────────────────────────────────────────── */}
-      <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-cyan-400 flex items-center justify-center text-2xl font-bold flex-shrink-0 shadow-sm">
+      <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.05)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200/60 text-blue-600 flex items-center justify-center text-2xl font-bold flex-shrink-0 shadow-xs">
             📜
           </div>
           <div>
-            <h1 className="text-xl font-bold text-slate-900 dark:text-white">
-              Reading History & <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">GSDMA Reports</span>
-            </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+            <div className="flex items-center gap-2">
+              <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">
+                Reading History & <span className="bg-gradient-to-r from-blue-600 via-sky-600 to-cyan-500 bg-clip-text text-transparent">GSDMA Reports</span>
+              </h1>
+              <span className="bg-blue-50 text-blue-700 border border-blue-200/80 text-[10px] font-mono px-2.5 py-0.5 rounded-full font-bold uppercase">
+                Audit Trail
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 font-mono mt-0.5">
               Audit-grade time-series sensor telemetry, environmental incidents, & PDF compliance filing
             </p>
           </div>
@@ -102,13 +107,13 @@ export default function HistoryPage() {
         <div className="flex items-center gap-2.5 flex-wrap">
           <button
             onClick={handleExportCSV}
-            className="bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs font-mono font-bold px-4 py-2.5 rounded-full transition-all shadow-xs flex items-center gap-1.5"
+            className="bg-white hover:bg-slate-50 border border-slate-200/90 text-slate-700 text-xs font-mono font-bold px-4 py-2.5 rounded-full transition-all shadow-xs flex items-center gap-2 hover:border-slate-300"
           >
             <span>📥</span> Export CSV
           </button>
           <button
             onClick={handlePrintReport}
-            className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white text-xs font-mono font-bold px-5 py-2.5 rounded-full transition-all shadow-md shadow-blue-500/20 flex items-center gap-1.5"
+            className="bg-gradient-to-r from-blue-600 via-sky-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white text-xs font-mono font-bold px-5 py-2.5 rounded-full transition-all shadow-md shadow-blue-500/25 flex items-center gap-2"
           >
             <span>🖨️</span> Generate Incident Report (PDF)
           </button>
@@ -116,19 +121,19 @@ export default function HistoryPage() {
       </div>
 
       {/* ─── Filter & View Switcher Strip ───────────────────────────────── */}
-      <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
+      <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.05)] flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
         <div className="flex items-center gap-2.5 flex-wrap w-full md:w-auto">
           {/* View Mode Toggle */}
-          <div className="flex bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full p-1">
+          <div className="flex bg-slate-100 border border-slate-200/90 rounded-full p-1">
             <button
               onClick={() => setViewMode('table')}
-              className={clsx('px-4 py-1.5 rounded-full font-mono font-bold transition-all', viewMode === 'table' ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-sm' : 'text-slate-600 dark:text-slate-300')}
+              className={clsx('px-4 py-1.5 rounded-full font-mono font-bold text-xs transition-all', viewMode === 'table' ? 'bg-gradient-to-r from-blue-600 via-sky-600 to-cyan-500 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900')}
             >
               Data Grid
             </button>
             <button
               onClick={() => setViewMode('chart')}
-              className={clsx('px-4 py-1.5 rounded-full font-mono font-bold transition-all', viewMode === 'chart' ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-sm' : 'text-slate-600 dark:text-slate-300')}
+              className={clsx('px-4 py-1.5 rounded-full font-mono font-bold text-xs transition-all', viewMode === 'chart' ? 'bg-gradient-to-r from-blue-600 via-sky-600 to-cyan-500 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900')}
             >
               Time-Series Curves
             </button>
@@ -138,7 +143,7 @@ export default function HistoryPage() {
           <select
             value={regionFilter}
             onChange={(e) => setRegionFilter(e.target.value)}
-            className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-white font-mono focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+            className="bg-slate-50 border border-slate-200/90 rounded-xl px-3 py-2 text-slate-900 font-mono text-xs focus:ring-4 focus:ring-blue-500/10 focus:border-blue-600 focus:outline-none transition-all"
           >
             <option value="all">All Regions</option>
             {REGIONS.filter((r) => r.id !== 'all').map((r) => (
@@ -150,7 +155,7 @@ export default function HistoryPage() {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-white font-mono focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+            className="bg-slate-50 border border-slate-200/90 rounded-xl px-3 py-2 text-slate-900 font-mono text-xs focus:ring-4 focus:ring-blue-500/10 focus:border-blue-600 focus:outline-none transition-all"
           >
             <option value="all">All Categories</option>
             {SENSOR_CATEGORIES.map((c) => (
@@ -164,16 +169,16 @@ export default function HistoryPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Filter by node ID, location, or parameter..."
-          className="w-full md:w-72 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+          className="w-full md:w-72 bg-slate-50 border border-slate-200/90 rounded-xl px-3.5 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-600 transition-all"
         />
       </div>
 
       {/* ─── Content: Table OR Chart View ───────────────────────────────── */}
       {viewMode === 'table' ? (
-        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-3xl shadow-sm overflow-hidden">
+        <div className="bg-white border border-slate-200/90 rounded-3xl shadow-[0_4px_20px_-2px_rgba(15,23,42,0.05)] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs font-sans">
-              <thead className="bg-slate-50 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 font-mono uppercase text-[10px] border-b border-slate-200 dark:border-slate-800">
+              <thead className="bg-slate-50 text-slate-500 font-mono uppercase text-[10px] border-b border-slate-200">
                 <tr>
                   <th className="p-4">Log ID</th>
                   <th className="p-4">Node</th>
@@ -186,26 +191,26 @@ export default function HistoryPage() {
                   <th className="p-4 text-right">Timestamp</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200/80 dark:divide-slate-800">
+              <tbody className="divide-y divide-slate-100">
                 {historicalRows.map((r) => (
-                  <tr key={r.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="p-4 font-mono text-[11px] text-slate-500 dark:text-slate-400">{r.id}</td>
-                    <td className="p-4 font-mono font-bold text-blue-600 dark:text-cyan-400">{r.node_id}</td>
-                    <td className="p-4 text-slate-900 dark:text-white truncate max-w-xs">{r.location}</td>
-                    <td className="p-4 font-mono text-blue-600 dark:text-cyan-400 font-semibold">{r.water}</td>
-                    <td className="p-4 font-mono text-purple-600 dark:text-purple-400 font-semibold">{r.aqi} AQI</td>
-                    <td className="p-4 font-mono text-amber-600 dark:text-amber-400 font-semibold">{r.temp}</td>
-                    <td className="p-4 font-mono text-orange-600 dark:text-orange-400 font-semibold">{r.gas}</td>
+                  <tr key={r.id} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="p-4 font-mono text-[11px] text-slate-500">{r.id}</td>
+                    <td className="p-4 font-mono font-bold text-blue-600">{r.node_id}</td>
+                    <td className="p-4 text-slate-900 font-medium truncate max-w-xs">{r.location}</td>
+                    <td className="p-4 font-mono text-blue-600 font-semibold">{r.water}</td>
+                    <td className="p-4 font-mono text-purple-600 font-semibold">{r.aqi} AQI</td>
+                    <td className="p-4 font-mono text-amber-600 font-semibold">{r.temp}</td>
+                    <td className="p-4 font-mono text-orange-600 font-semibold">{r.gas}</td>
                     <td className="p-4 font-mono">
                       <span className={clsx(
                         'px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase',
-                        r.severity === 'emergency' ? 'bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400' :
-                        r.severity === 'warning' ? 'bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400' : 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400'
+                        r.severity === 'emergency' ? 'bg-red-50 text-red-700 border border-red-200' :
+                        r.severity === 'warning' ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                       )}>
                         {r.severity}
                       </span>
                     </td>
-                    <td className="p-4 text-right font-mono text-[11px] text-slate-400 dark:text-slate-500">{r.time}</td>
+                    <td className="p-4 text-right font-mono text-[11px] text-slate-500">{r.time}</td>
                   </tr>
                 ))}
               </tbody>
@@ -213,38 +218,38 @@ export default function HistoryPage() {
           </div>
         </div>
       ) : (
-        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-6">
-          <div className="border-b border-slate-200 dark:border-slate-800 pb-3">
-            <h3 className="font-bold text-sm text-slate-900 dark:text-white font-mono">24-Hour Diurnal Multi-Sensor Trends</h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Aggregated regional curves with shaded threshold bands</p>
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.05)] space-y-6">
+          <div className="border-b border-slate-100 pb-3">
+            <h3 className="font-extrabold text-sm text-slate-900 font-mono">24-Hour Diurnal Multi-Sensor Trends</h3>
+            <p className="text-xs text-slate-500 mt-0.5">Aggregated regional curves with shaded threshold bands</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <div className="text-xs font-mono font-bold text-blue-600 dark:text-cyan-400">🌊 Hydrological Depth Trend (cm)</div>
+            <div className="space-y-2 bg-slate-50/50 p-4 rounded-2xl border border-slate-200/80">
+              <div className="text-xs font-mono font-bold text-blue-600">🌊 Hydrological Depth Trend (cm)</div>
               <div className="h-56">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={MOCK_TIME_SERIES}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#94A3B8" opacity={0.2} />
-                    <XAxis dataKey="time" stroke="#94A3B8" fontSize={10} fontStyle="italic" />
-                    <YAxis stroke="#94A3B8" fontSize={10} domain={[30, 80]} />
-                    <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: 12, color: '#f8fafc', fontSize: 11 }} />
-                    <Line type="monotone" dataKey="water" stroke="#06b6d4" strokeWidth={2.5} dot={{ r: 3 }} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="time" stroke="#64748b" fontSize={10} fontStyle="italic" />
+                    <YAxis stroke="#64748b" fontSize={10} domain={[30, 80]} />
+                    <Tooltip contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e2e8f0', borderRadius: 16, color: '#0f172a', fontSize: 11, boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)' }} />
+                    <Line type="monotone" dataKey="water" stroke="#0284c7" strokeWidth={2.5} dot={{ r: 3 }} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
             </div>
 
-            <div className="space-y-2">
-              <div className="text-xs font-mono font-bold text-purple-600 dark:text-purple-400">🌫️ Air Quality Index Trend (AQI)</div>
+            <div className="space-y-2 bg-slate-50/50 p-4 rounded-2xl border border-slate-200/80">
+              <div className="text-xs font-mono font-bold text-purple-600">🌫️ Air Quality Index Trend (AQI)</div>
               <div className="h-56">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={MOCK_TIME_SERIES}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#94A3B8" opacity={0.2} />
-                    <XAxis dataKey="time" stroke="#94A3B8" fontSize={10} />
-                    <YAxis stroke="#94A3B8" fontSize={10} domain={[20, 140]} />
-                    <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: 12, color: '#f8fafc', fontSize: 11 }} />
-                    <Line type="monotone" dataKey="aqi" stroke="#a855f7" strokeWidth={2.5} dot={{ r: 3 }} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="time" stroke="#64748b" fontSize={10} />
+                    <YAxis stroke="#64748b" fontSize={10} domain={[20, 140]} />
+                    <Tooltip contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e2e8f0', borderRadius: 16, color: '#0f172a', fontSize: 11, boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)' }} />
+                    <Line type="monotone" dataKey="aqi" stroke="#9333ea" strokeWidth={2.5} dot={{ r: 3 }} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
