@@ -188,16 +188,16 @@ body.light-theme ::-webkit-scrollbar-thumb { background: #3b82f6; }
   background-size: cover;
   background-position: center 20%;
   background-repeat: no-repeat;
-  filter: blur(2.5px);
+  filter: blur(3px);
   transform: scale(1.02);
   z-index: 0;
-  opacity: 0.88;
+  opacity: 0.22;
   pointer-events: none;
 }
 
 body.light-theme .hero-photo-bg {
-  opacity: 0.88;
-  filter: blur(2.5px) saturate(1.15) contrast(1.04);
+  opacity: 0.22;
+  filter: blur(3px) saturate(1.1);
 }
 
 .hero-photo-overlay {
@@ -205,15 +205,11 @@ body.light-theme .hero-photo-bg {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: 
-    radial-gradient(ellipse 70% 55% at 50% 38%, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.35) 55%, transparent 80%),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.1) 40%, rgba(248, 250, 252, 0.85) 82%, #f8fafc 100%);
+  background: linear-gradient(to bottom, rgba(248, 250, 252, 0.15) 0%, rgba(248, 250, 252, 0.4) 50%, #f8fafc 100%);
 }
 
 body:not(.light-theme) .hero-photo-overlay {
-  background: 
-    radial-gradient(ellipse 70% 55% at 50% 38%, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.4) 55%, transparent 80%),
-    linear-gradient(to bottom, rgba(15, 23, 42, 0.25) 0%, rgba(15, 23, 42, 0.1) 40%, rgba(2, 6, 23, 0.9) 82%, #020617 100%);
+  background: linear-gradient(to bottom, rgba(2, 6, 23, 0.3) 0%, rgba(2, 6, 23, 0.7) 50%, #020617 100%);
 }
 
 .hero-bg-container {
@@ -288,7 +284,7 @@ body.light-theme .hero-badge {
 }
 body.light-theme .hero-heading {
   color: #0f172a;
-  text-shadow: 0 2px 20px rgba(255, 255, 255, 0.95), 0 0 40px rgba(255, 255, 255, 0.85);
+  text-shadow: none;
 }
 
 .hero-heading .gradient-flood {
@@ -296,8 +292,19 @@ body.light-theme .hero-heading {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+body.light-theme .hero-heading .gradient-flood {
+  background: linear-gradient(135deg, #0369a1 0%, #1e40af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .hero-heading .gradient-fire {
   background: linear-gradient(135deg, #ea580c 0%, #dc2626 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+body.light-theme .hero-heading .gradient-fire {
+  background: linear-gradient(135deg, #c2410c 0%, #b91c1c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -310,9 +317,9 @@ body.light-theme .hero-heading {
   line-height: 1.7;
 }
 body.light-theme .hero-subtext {
-  color: #1e293b;
+  color: #334155;
   font-weight: 500;
-  text-shadow: 0 1px 12px rgba(255, 255, 255, 0.95);
+  text-shadow: none;
 }
 
 /* Hero Action Buttons - Useful Only */
