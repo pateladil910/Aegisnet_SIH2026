@@ -177,28 +177,27 @@ body.light-theme ::-webkit-scrollbar-thumb { background: #3b82f6; }
   overflow: hidden;
 }
 
-/* Photorealistic atmospheric disaster background simulation with subtle blur */
+/* Photorealistic atmospheric disaster background photo with slight blur */
 .hero-photo-bg {
   position: absolute;
-  top: -24px;
-  left: -24px;
-  right: -24px;
-  bottom: -24px;
-  background-image: url('/hero-disaster-bg.jpg');
+  top: -16px;
+  left: -16px;
+  right: -16px;
+  bottom: -16px;
+  background-image: url('/hero-disaster-bg.jpg'), url('hero-disaster-bg.jpg');
   background-size: cover;
-  background-position: center 25%;
+  background-position: center 20%;
   background-repeat: no-repeat;
-  filter: blur(5px);
-  transform: scale(1.05);
+  filter: blur(2.5px);
+  transform: scale(1.02);
   z-index: 0;
-  opacity: 0.46;
+  opacity: 0.88;
   pointer-events: none;
-  transition: opacity 0.4s ease;
 }
 
 body.light-theme .hero-photo-bg {
-  opacity: 0.5;
-  filter: blur(5px) saturate(1.15);
+  opacity: 0.88;
+  filter: blur(2.5px) saturate(1.15) contrast(1.04);
 }
 
 .hero-photo-overlay {
@@ -207,91 +206,25 @@ body.light-theme .hero-photo-bg {
   z-index: 1;
   pointer-events: none;
   background: 
-    radial-gradient(ellipse 95% 75% at 50% 32%, rgba(248, 250, 252, 0.65) 0%, rgba(248, 250, 252, 0.85) 55%, #f8fafc 100%),
-    linear-gradient(to bottom, rgba(248, 250, 252, 0.2) 0%, rgba(248, 250, 252, 0.68) 50%, #f8fafc 100%);
+    radial-gradient(ellipse 70% 55% at 50% 38%, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.35) 55%, transparent 80%),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.1) 40%, rgba(248, 250, 252, 0.85) 82%, #f8fafc 100%);
 }
 
 body:not(.light-theme) .hero-photo-overlay {
   background: 
-    radial-gradient(ellipse 95% 75% at 50% 32%, rgba(15, 23, 42, 0.65) 0%, rgba(15, 23, 42, 0.88) 55%, #020617 100%),
-    linear-gradient(to bottom, rgba(15, 23, 42, 0.35) 0%, rgba(15, 23, 42, 0.8) 50%, #020617 100%);
+    radial-gradient(ellipse 70% 55% at 50% 38%, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.4) 55%, transparent 80%),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.25) 0%, rgba(15, 23, 42, 0.1) 40%, rgba(2, 6, 23, 0.9) 82%, #020617 100%);
 }
 
 .hero-bg-container {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: 
-    radial-gradient(ellipse at 88% 18%, rgba(239, 68, 68, 0.38) 0%, rgba(249, 115, 22, 0.22) 35%, transparent 65%),
-    radial-gradient(ellipse at 12% 82%, rgba(2, 132, 199, 0.4) 0%, rgba(37, 99, 235, 0.28) 40%, transparent 70%),
-    transparent;
+  display: none;
 }
 
-body.light-theme .hero-bg-container {
-  background: 
-    radial-gradient(ellipse at 88% 18%, rgba(239, 68, 68, 0.14) 0%, rgba(249, 115, 22, 0.08) 35%, transparent 65%),
-    radial-gradient(ellipse at 12% 82%, rgba(2, 132, 199, 0.16) 0%, rgba(37, 99, 235, 0.1) 40%, transparent 70%),
-    transparent;
-}
-
-.fire-hazard-glow {
-  position: absolute;
-  top: -80px;
-  right: -80px;
-  width: 650px;
-  height: 520px;
-  background: radial-gradient(circle, rgba(239, 68, 68, 0.42) 0%, rgba(245, 158, 11, 0.22) 45%, transparent 70%);
-  filter: blur(55px);
-  animation: firePulse 5s ease-in-out infinite alternate;
-}
-
-@keyframes firePulse {
-  0% { transform: scale(1) translateY(0); opacity: 0.75; }
-  100% { transform: scale(1.15) translateY(-15px); opacity: 1; }
-}
-
-.flood-hazard-glow {
-  position: absolute;
-  bottom: -100px;
-  left: -100px;
-  width: 700px;
-  height: 550px;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.48) 0%, rgba(37, 99, 235, 0.28) 45%, transparent 70%);
-  filter: blur(60px);
-  animation: floodWave 6s ease-in-out infinite alternate;
-}
-
-@keyframes floodWave {
-  0% { transform: scale(1) translateX(0); opacity: 0.8; }
-  100% { transform: scale(1.18) translateX(20px); opacity: 1; }
-}
-
+.fire-hazard-glow,
+.flood-hazard-glow,
 .radar-detector {
-  position: absolute;
-  width: 380px;
-  height: 380px;
-  border-radius: 50%;
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  pointer-events: none;
-  z-index: 1;
+  display: none !important;
 }
-.radar-detector::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 1px dashed rgba(56, 189, 248, 0.35);
-  animation: rotateRadar 14s linear infinite;
-}
-@keyframes rotateRadar {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.radar-left { top: 20%; left: 8%; }
-.radar-right { top: 30%; right: 8%; border-color: rgba(239, 68, 68, 0.25); }
-.radar-right::after { border-color: rgba(239, 68, 68, 0.35); }
 
 #embersCanvas {
   position: absolute;
@@ -898,14 +831,6 @@ footer {
   <!-- Photorealistic Flood & Wildfire Early Detection Background with Slight Blur -->
   <div class="hero-photo-bg"></div>
   <div class="hero-photo-overlay"></div>
-  <div class="hero-bg-container"></div>
-  <div class="fire-hazard-glow"></div>
-  <div class="flood-hazard-glow"></div>
-
-  <!-- Radar detection circles -->
-  <div class="radar-detector radar-left"></div>
-  <div class="radar-detector radar-right"></div>
-
   <canvas id="embersCanvas"></canvas>
 
   <div class="hero-inner">
