@@ -1,0 +1,11 @@
+{
+  "water_mean": 30.0773282232893,
+  "water_std": 3.9149048309894168,
+  "water_roc_threshold": 1.5,
+  "temp_mean": 28.01458553639006,
+  "temp_std": 2.457406077420583,
+  "temp_roc_threshold": 2.0,
+  "smoke_mean": 59.26089540895696,
+  "smoke_std": 14.87825848627205,
+  "smoke_roc_threshold": 15.0
+}
