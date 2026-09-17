@@ -188,16 +188,16 @@ body.light-theme ::-webkit-scrollbar-thumb { background: #3b82f6; }
   background-size: cover;
   background-position: center 20%;
   background-repeat: no-repeat;
-  filter: blur(3px);
+  filter: blur(2px);
   transform: scale(1.02);
   z-index: 0;
-  opacity: 0.22;
+  opacity: 0.72;
   pointer-events: none;
 }
 
 body.light-theme .hero-photo-bg {
-  opacity: 0.22;
-  filter: blur(3px) saturate(1.1);
+  opacity: 0.72;
+  filter: blur(2px) saturate(1.2) contrast(1.05);
 }
 
 .hero-photo-overlay {
@@ -205,11 +205,15 @@ body.light-theme .hero-photo-bg {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(to bottom, rgba(248, 250, 252, 0.15) 0%, rgba(248, 250, 252, 0.4) 50%, #f8fafc 100%);
+  background: 
+    radial-gradient(ellipse 65% 52% at 50% 38%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.25) 55%, transparent 85%),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.15) 40%, rgba(248, 250, 252, 0.85) 85%, #f8fafc 100%);
 }
 
 body:not(.light-theme) .hero-photo-overlay {
-  background: linear-gradient(to bottom, rgba(2, 6, 23, 0.3) 0%, rgba(2, 6, 23, 0.7) 50%, #020617 100%);
+  background: 
+    radial-gradient(ellipse 65% 52% at 50% 38%, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.25) 55%, transparent 85%),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.4) 40%, rgba(2, 6, 23, 0.9) 85%, #020617 100%);
 }
 
 .hero-bg-container {
