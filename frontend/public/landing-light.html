@@ -1188,7 +1188,7 @@ body.light-theme footer {
 
   var urlParams = new URLSearchParams(window.location.search);
   var themeParam = urlParams.get('theme');
-  var savedTheme = localStorage.getItem('aegisnet_theme');
+  var savedTheme = 'light'; enableLight();
 
   if (themeParam === 'light' || savedTheme === 'light') {
     enableLight();
