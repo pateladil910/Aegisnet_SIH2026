@@ -1,4 +1,4 @@
-// components/layout/TopHeader.jsx — Premium AegisNet Command Center Navbar
+// components/layout/TopHeader.jsx — Premium AegisNet Command Center Navbar (Luminous Light & Dark Adaptive)
 import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useStore, useAuthStore, useThemeStore, REGIONS } from '../../store/useStore'
@@ -52,26 +52,26 @@ export default function TopHeader({ onOpenCommandPalette, onOpenScenarioDrawer }
   }, [])
 
   return (
-    <header className="sticky top-0 z-[1050] select-none w-full">
-      {/* ── TOP BAR — Dark Slate & Glassmorphic Brand Strip ──────────────── */}
-      <div className="bg-slate-950/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-800 shadow-lg">
+    <header className="sticky top-0 z-[1050] select-none w-full font-sans">
+      {/* ── TOP BAR — Luminous Frosted Glass in Light Mode / Slate in Dark ─ */}
+      <div className="bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200/90 dark:border-slate-800 shadow-xs transition-colors duration-300">
         <div className="h-[62px] px-4 lg:px-6 flex items-center justify-between gap-3">
 
           {/* Brand */}
           <Link to="/dashboard" className="flex items-center gap-3 flex-shrink-0 group">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-blue-500/30 group-hover:scale-105 transition-transform duration-200">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-blue-500/25 group-hover:scale-105 transition-transform duration-200">
               🛡️
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-300 text-base tracking-wider">
+                <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300 text-base tracking-wider">
                   AEGISNET
                 </span>
-                <span className="bg-blue-500/15 text-blue-300 border border-blue-500/30 text-[9px] font-mono px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                <span className="bg-blue-50 dark:bg-blue-500/15 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-500/30 text-[9px] font-mono px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
                   SIH26178
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400 hidden sm:block leading-none mt-0.5 font-medium tracking-wide">
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 hidden sm:block leading-none mt-0.5 font-medium tracking-wide">
                 AI-Powered Edge Environmental Guardian
               </p>
             </div>
@@ -82,13 +82,13 @@ export default function TopHeader({ onOpenCommandPalette, onOpenScenarioDrawer }
             <button
               type="button"
               onClick={onOpenCommandPalette}
-              className="w-full h-9 bg-slate-900/90 hover:bg-slate-800/90 border border-slate-700/80 rounded-full px-4 text-xs text-slate-400 flex items-center justify-between transition-all duration-200 shadow-inner"
+              className="w-full h-9 bg-slate-100/90 dark:bg-slate-900/90 hover:bg-slate-200/80 dark:hover:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 rounded-full px-4 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between transition-all duration-200"
             >
               <div className="flex items-center gap-2">
                 <span className="text-slate-400 text-sm">🔍</span>
-                <span className="text-slate-400 font-medium">Search nodes, hazards, sensors...</span>
+                <span className="font-medium">Search nodes, hazards, sensors...</span>
               </div>
-              <kbd className="bg-slate-800 border border-slate-700 rounded-md px-1.5 py-0.5 text-[9px] font-mono font-bold text-slate-400">
+              <kbd className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-1.5 py-0.5 text-[9px] font-mono font-bold text-slate-500 dark:text-slate-400 shadow-xs">
                 Ctrl+K
               </kbd>
             </button>
@@ -99,84 +99,56 @@ export default function TopHeader({ onOpenCommandPalette, onOpenScenarioDrawer }
 
             {/* Sim pill */}
             {activeScenario && (
-              <button
-                type="button"
-                onClick={onOpenScenarioDrawer}
-                className="h-8 px-3 bg-amber-500/20 border border-amber-500/40 text-amber-300 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm"
-              >
-                <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-                <span className="font-mono uppercase font-bold">{activeScenario}</span>
-              </button>
+              <span className="hidden xl:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-500/15 border border-amber-200 dark:border-amber-500/30 text-amber-800 dark:text-amber-300 text-xs font-mono font-bold animate-pulse">
+                <span>⚠️</span>
+                <span>{activeScenario.toUpperCase()} DRILL</span>
+              </span>
             )}
 
-            {/* Region selector */}
-            <div className="hidden lg:flex items-center">
+            {/* Region picker */}
+            <div className="hidden lg:flex items-center gap-1 bg-slate-100/90 dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-700 rounded-full px-2.5 py-1 text-xs">
+              <span className="text-slate-400 text-xs">📍</span>
               <select
                 value={selectedRegion}
                 onChange={(e) => setSelectedRegion(e.target.value)}
-                className="h-8 bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-full px-3 text-xs font-semibold text-slate-200 focus:outline-none focus:border-blue-500/60 transition-all cursor-pointer"
+                className="bg-transparent text-slate-800 dark:text-slate-200 text-xs font-semibold focus:outline-none cursor-pointer pr-1"
               >
                 {REGIONS.map((r) => (
-                  <option key={r.id} value={r.id}>{r.name}</option>
+                  <option key={r.id} value={r.id} className="dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+                    {r.name}
+                  </option>
                 ))}
               </select>
             </div>
 
-            {/* LoRa status */}
-            <div
-              className="hidden xl:flex items-center gap-1.5 h-8 px-3 bg-slate-900/90 border border-slate-700 rounded-full text-xs"
-              title="LoRa 433/868MHz Mesh Fallback Ready"
-            >
-              <span className="text-sm">📡</span>
-              <span className="text-slate-400 font-medium">Mesh:</span>
-              <span className="font-mono font-bold text-emerald-400">433MHz OK</span>
+            {/* Mesh stats */}
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 text-emerald-800 dark:text-emerald-300 text-xs font-mono font-bold">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>{onlineCount}/{totalCount} LoRa</span>
             </div>
 
-            {/* Node count */}
-            <div
-              className="hidden sm:flex items-center gap-1.5 h-8 px-3 bg-slate-900/90 border border-slate-700 rounded-full text-xs"
-              title="Active sentinel nodes"
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="font-mono font-bold text-slate-100">{onlineCount}/{totalCount}</span>
-              <span className="text-slate-400 font-medium hidden md:inline">Online</span>
-            </div>
-
-            {/* Alert bell */}
-            <Link
-              to="/alerts"
-              className="relative w-8 h-8 flex items-center justify-center rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 transition-all"
-              title="Alert Queue"
-            >
-              <span className="text-sm">🔔</span>
-              {unackAlertsCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-mono font-bold rounded-full w-4 h-4 flex items-center justify-center shadow-md animate-pulse">
-                  {unackAlertsCount}
-                </span>
-              )}
-            </Link>
-
-            {/* Theme Toggle Button */}
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="w-8 h-8 rounded-full border border-slate-700 bg-slate-900 hover:bg-slate-800 text-slate-200 flex items-center justify-center text-sm transition-all hover:scale-105"
-              title={theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
-            >
-              {theme === 'dark' ? '☀️' : '🌙'}
-            </button>
-
-            {/* Simulate CTA */}
+            {/* Quick action: simulate drawer */}
             <button
               type="button"
               onClick={onOpenScenarioDrawer}
-              className="h-8 px-3.5 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded-full text-xs font-bold flex items-center gap-1.5 transition-all shadow-md shadow-blue-900/40 hover:scale-105"
+              className="h-8 px-3.5 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white rounded-full text-xs font-bold flex items-center gap-1.5 transition-all shadow-md shadow-blue-500/20 hover:scale-105"
             >
               <span>🧪</span>
               <span>Simulate</span>
             </button>
 
-            <div className="h-5 w-px bg-slate-700 mx-0.5" aria-hidden="true" />
+            {/* Theme Toggle Button */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center text-sm hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors shadow-xs"
+              title={theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
+              aria-label="Toggle Dark/Light Mode"
+            >
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
+
+            <div className="h-5 w-px bg-slate-200 dark:bg-slate-700 mx-0.5" aria-hidden="true" />
 
             {/* Profile dropdown */}
             <div className="relative" ref={profileMenuRef}>
@@ -187,22 +159,22 @@ export default function TopHeader({ onOpenCommandPalette, onOpenScenarioDrawer }
                 className={clsx(
                   'h-8 px-2.5 flex items-center gap-1.5 rounded-full border transition-all',
                   profileOpen
-                    ? 'bg-slate-800 border-blue-500'
-                    : 'bg-slate-900 hover:bg-slate-800 border-slate-700'
+                    ? 'bg-slate-100 dark:bg-slate-800 border-blue-500'
+                    : 'bg-slate-100/90 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 border-slate-200/90 dark:border-slate-700'
                 )}
               >
-                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 text-white text-xs font-bold flex items-center justify-center shadow-sm">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 text-white text-xs font-bold flex items-center justify-center shadow-xs">
                   {user?.name?.charAt(0) || 'A'}
                 </div>
                 <div className="hidden sm:block text-left">
-                  <div className="text-xs font-bold text-slate-100 leading-tight">
+                  <div className="text-xs font-bold text-slate-800 dark:text-slate-100 leading-tight">
                     {user?.name?.split(' ').slice(-1)[0] || 'Officer'}
                   </div>
-                  <div className="text-[9px] text-slate-400 leading-none">
+                  <div className="text-[9px] text-slate-500 dark:text-slate-400 leading-none">
                     {user?.role?.split(' ')[0] || 'GSDMA'}
                   </div>
                 </div>
-                <span className={clsx('text-[9px] text-slate-400 transition-transform duration-200', profileOpen && 'rotate-180')}>
+                <span className={clsx('text-[9px] text-slate-500 dark:text-slate-400 transition-transform duration-200', profileOpen && 'rotate-180')}>
                   ▼
                 </span>
               </button>
@@ -217,24 +189,24 @@ export default function TopHeader({ onOpenCommandPalette, onOpenScenarioDrawer }
                     </span>
                   </div>
 
-                  {[
-                    { to: '/settings', icon: '⚙️', label: 'Settings & Threshold Rules' },
-                    { to: '/fleet',    icon: '🛰️', label: 'Node Fleet Inventory' },
-                    { to: '/public',   icon: '🌐', label: 'Citizen Safety Portal', newTab: true },
-                  ].map(({ to, icon, label, newTab }) => (
-                    <Link
-                      key={to}
-                      to={to}
-                      target={newTab ? '_blank' : undefined}
-                      onClick={() => setProfileOpen(false)}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition-colors"
-                    >
-                      <span>{icon}</span>
-                      <span>{label}</span>
-                    </Link>
-                  ))}
+                  <Link
+                    to="/settings"
+                    onClick={() => setProfileOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    <span>⚙️</span>
+                    <span>System Settings &amp; Rules</span>
+                  </Link>
+                  <Link
+                    to="/history"
+                    onClick={() => setProfileOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    <span>📜</span>
+                    <span>Audit Logs &amp; Reports</span>
+                  </Link>
 
-                  <div className="border-t border-slate-200 dark:border-slate-800 my-1 mx-1" />
+                  <div className="border-t border-slate-100 dark:border-slate-800 my-1" />
 
                   <button
                     type="button"
@@ -252,8 +224,8 @@ export default function TopHeader({ onOpenCommandPalette, onOpenScenarioDrawer }
       </div>
 
       {/* ── NAV BAR — Sleek Pill-Tab Navigation (Light / Dark Adaptive) ───── */}
-      <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-300">
-        <div className="px-4 lg:px-6 flex items-center gap-1 overflow-x-auto h-12 scrollbar-none">
+      <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200/90 dark:border-slate-800 shadow-xs transition-colors duration-300">
+        <div className="px-4 lg:px-6 flex items-center gap-1.5 overflow-x-auto h-12 scrollbar-none">
           {NAV_LINKS.map((item) => {
             const isActive =
               location.pathname === item.to ||
@@ -266,7 +238,7 @@ export default function TopHeader({ onOpenCommandPalette, onOpenScenarioDrawer }
                 className={clsx(
                   'relative flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200',
                   isActive
-                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md shadow-blue-500/25 scale-[1.02]'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md shadow-blue-500/20 scale-[1.02]'
                     : 'text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-cyan-400 hover:bg-slate-100 dark:hover:bg-slate-800/60'
                 )}
               >
@@ -288,6 +260,3 @@ export default function TopHeader({ onOpenCommandPalette, onOpenScenarioDrawer }
     </header>
   )
 }
-
-
-

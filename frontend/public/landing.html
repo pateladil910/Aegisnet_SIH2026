@@ -901,7 +901,7 @@ body.light-theme footer {
 }
 </style>
 </head>
-<body>
+<body class="light-theme">
 
 <!-- TRANSPARENT NAVBAR -->
 <nav id="navbar">
@@ -1184,27 +1184,29 @@ body.light-theme footer {
 
   /* THEME TOGGLE */
   var themeBtn = document.getElementById('themeToggle');
-  var isLight = false;
+  var isLight = true;
 
   var urlParams = new URLSearchParams(window.location.search);
   var themeParam = urlParams.get('theme');
   var savedTheme = localStorage.getItem('aegisnet_theme');
 
-  if (themeParam === 'light' || savedTheme === 'light') {
+  if (themeParam === 'dark' || savedTheme === 'dark') {
+    enableDark();
+  } else {
     enableLight();
   }
 
   function enableLight() {
     isLight = true;
     document.body.classList.add('light-theme');
-    if (themeBtn) themeBtn.textContent = '☀️';
+    if (themeBtn) themeBtn.textContent = '🌙';
     localStorage.setItem('aegisnet_theme', 'light');
   }
 
   function enableDark() {
     isLight = false;
     document.body.classList.remove('light-theme');
-    if (themeBtn) themeBtn.textContent = '🌙';
+    if (themeBtn) themeBtn.textContent = '☀️';
     localStorage.setItem('aegisnet_theme', 'dark');
   }
 

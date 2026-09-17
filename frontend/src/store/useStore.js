@@ -1043,7 +1043,11 @@ export const useAuthStore = create((set) => ({
 const getInitialTheme = () => {
   if (typeof window !== 'undefined') {
     const saved = localStorage.getItem('aegisnet_theme')
-    if (saved) return saved
+    if (saved === 'dark') return 'dark'
+    if (saved === 'light') return 'light'
+    localStorage.setItem('aegisnet_theme', 'light')
+    document.documentElement.classList.remove('dark')
+    document.body.classList.remove('dark')
   }
   return 'light'
 }

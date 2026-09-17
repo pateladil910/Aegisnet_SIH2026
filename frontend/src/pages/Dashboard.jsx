@@ -97,18 +97,18 @@ export default function Dashboard() {
         </div>
 
         {/* Grid focus card */}
-        <div className="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-6 card-shadow flex flex-col justify-between text-white">
+        <div className="bg-gradient-to-br from-indigo-600 via-blue-600 to-cyan-600 dark:from-slate-900 dark:to-slate-950 border border-blue-400/30 dark:border-slate-800 rounded-3xl p-6 card-shadow flex flex-col justify-between text-white shadow-md shadow-blue-500/20">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Spatial Catchment Grid</span>
+            <span className="text-[10px] font-extrabold text-blue-100 dark:text-slate-400 uppercase tracking-widest">Spatial Catchment Grid</span>
             <span className="text-lg">🗺️</span>
           </div>
           <div className="my-4 flex items-baseline justify-between">
-            <div className="text-3xl font-extrabold capitalize text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
+            <div className="text-3xl font-extrabold capitalize text-white">
               {selectedRegion === 'all' ? 'Tapi Basin' : selectedRegion}
             </div>
-            <span className="text-xs font-mono text-cyan-300 font-bold bg-cyan-950/70 border border-cyan-800 px-2 py-0.5 rounded-full">15km IDW</span>
+            <span className="text-xs font-mono text-white font-bold bg-white/20 border border-white/30 px-2.5 py-0.5 rounded-full backdrop-blur-xs">15km IDW</span>
           </div>
-          <div className="text-[11px] text-slate-400 font-medium">Multi-Sensor Spatial Co-Validation</div>
+          <div className="text-[11px] text-blue-100/90 dark:text-slate-400 font-medium">Multi-Sensor Spatial Co-Validation</div>
         </div>
       </div>
 

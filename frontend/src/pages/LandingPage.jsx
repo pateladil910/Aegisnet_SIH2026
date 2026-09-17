@@ -1,7 +1,7 @@
 // pages/LandingPage.jsx — AegisNet Animated Landing Page
 export default function LandingPage() {
   return (
-    <div className="fixed inset-0 w-screen h-screen bg-[#020617] z-50 overflow-hidden">
+    <div className="fixed inset-0 w-screen h-screen bg-slate-50 z-50 overflow-hidden">
       <iframe
         src="/landing.html"
         title="AegisNet Environmental Monitoring"
