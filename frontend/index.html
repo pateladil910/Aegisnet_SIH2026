@@ -7,6 +7,12 @@
     <meta name="description" content="AegisNet — AI-Powered Environmental Monitoring Network for Floods, Fires and Pollution" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <title>AegisNet — Environmental Monitoring</title>
+    <script>
+      try {
+        localStorage.setItem('aegisnet_theme', 'light');
+        document.documentElement.classList.remove('dark');
+      } catch (e) {}
+    </script>
   </head>
   <body class="bg-slate-50 text-slate-900 antialiased">
     <div id="root"></div>
