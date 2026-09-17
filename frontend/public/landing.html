@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AegisNet — AI-Powered Edge Environmental Monitoring</title>
+<style>
+  :root {
+    --red:     #dc2626;
+    --amber:   #eab308;
+    --green:   #16a34a;
+    --blue:    #2563eb;
+    --cyan:    #06b6d4;
+    --purple:  #7c3aed;
+    --bg:      #020617;
+    --surface: #0f172a;
+    --card:    #111827;
+    --border:  #1e293b;
+    --text:    #f1f5f9;
+    --muted:   #94a3b8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
+
+  /* ── UTILITIES ── */
+  .mono { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+  .gradient-text {
+    background: linear-gradient(135deg, #60a5fa, #06b6d4, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gradient-fire   { background: linear-gradient(135deg, #f97316, #ef4444); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .gradient-flood  { background: linear-gradient(135deg, #3b82f6, #06b6d4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .gradient-smog   { background: linear-gradient(135deg, #eab308, #84cc16); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+  /* ── ANIMATED BACKGROUND ── */
+  .bg-grid {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(37,99,235,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(37,99,235,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .orb {
+    position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 0;
+    animation: orbFloat 12s ease-in-out infinite alternate;
+  }
+  .orb-1 { width: 600px; height: 600px; background: rgba(37,99,235,.18); top:-150px; left:-200px; animation-delay:0s; }
+  .orb-2 { width: 500px; height: 500px; background: rgba(124,58,237,.14); bottom:-100px; right:-100px; animation-delay:-4s; }
+  .orb-3 { width: 400px; height: 400px; background: rgba(6,182,212,.10); top:40%; left:60%; animation-delay:-8s; }
+
+  @keyframes orbFloat { from { transform: translateY(0) scale(1); } to { transform: translateY(-40px) scale(1.05); } }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between;
+    background: rgba(2,6,23,.7); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(30,41,59,.6);
+    transition: background .3s;
+  }
+  .nav-brand { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
+  .nav-logo {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    box-shadow: 0 0 20px rgba(37,99,235,.4);
+  }
+  .nav-title { font-weight: 800; font-size: 1.1rem; letter-spacing: .08em; }
+  .nav-badge {
+    font-size: .65rem; font-family: monospace; padding: 2px 8px;
+    background: rgba(37,99,235,.2); border: 1px solid rgba(37,99,235,.4);
+    border-radius: 20px; color: #93c5fd;
+  }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    padding: .5rem 1.25rem; border-radius: 8px;
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+    color: #fff; text-decoration: none; font-weight: 600; font-size: .85rem;
+    box-shadow: 0 0 20px rgba(37,99,235,.3); transition: opacity .2s, transform .2s;
+  }
+  .nav-cta:hover { opacity: .9; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 8rem 2rem 4rem; z-index: 1;
+  }
+  .hero-chip {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .35rem 1rem; border-radius: 999px;
+    border: 1px solid rgba(37,99,235,.4); background: rgba(37,99,235,.1);
+    font-size: .8rem; color: #93c5fd; margin-bottom: 2rem;
+    animation: fadeSlideDown .8s ease both;
+  }
+  .hero-chip .dot { width: 6px; height: 6px; background: #3b82f6; border-radius: 50%; animation: pulse-glow 2s infinite; }
+  @keyframes pulse-glow { 0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,.4);} 50%{box-shadow:0 0 0 6px rgba(59,130,246,0);} }
+
+  h1.hero-title {
+    font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 900; line-height: 1.05;
+    letter-spacing: -.03em; margin-bottom: 1.5rem;
+    animation: fadeSlideDown .9s .1s ease both;
+  }
+  .hero-sub {
+    max-width: 680px; font-size: 1.15rem; color: var(--muted); margin-bottom: 2.5rem;
+    animation: fadeSlideDown 1s .2s ease both;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; animation: fadeSlideDown 1s .3s ease both; }
+  .btn-primary {
+    padding: .75rem 2rem; border-radius: 10px;
+    background: linear-gradient(135deg, #2563eb, #06b6d4); color: #fff;
+    font-weight: 700; font-size: .95rem; text-decoration: none;
+    box-shadow: 0 0 30px rgba(37,99,235,.4); transition: transform .2s, box-shadow .2s;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 0 50px rgba(37,99,235,.6); }
+  .btn-secondary {
+    padding: .75rem 2rem; border-radius: 10px;
+    border: 1px solid var(--border); color: var(--text);
+    font-weight: 600; font-size: .95rem; text-decoration: none;
+    background: rgba(255,255,255,.04); transition: border-color .2s, background .2s;
+  }
+  .btn-secondary:hover { border-color: #3b82f6; background: rgba(37,99,235,.1); }
+
+  /* ── HERO STATS ── */
+  .hero-stats {
+    display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content: center;
+    margin-top: 4rem; animation: fadeSlideDown 1s .5s ease both;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 2.2rem; font-weight: 900; line-height: 1; }
+  .stat-label { font-size: .8rem; color: var(--muted); margin-top: .25rem; letter-spacing: .05em; text-transform: uppercase; }
+
+  /* ── ANIMATED MESH NODES ── */
+  .mesh-canvas {
+    margin-top: 3rem; width: 100%; max-width: 800px; height: 180px;
+    position: relative; animation: fadeSlideDown 1s .4s ease both;
+  }
+  .mesh-node {
+    position: absolute; width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    border: 2px solid; cursor: default;
+  }
+  .mesh-node::before {
+    content: ''; position: absolute; inset: -8px; border-radius: 50%;
+    border: 1px solid currentColor; opacity: .3;
+    animation: meshRing 2.5s ease-in-out infinite;
+  }
+  @keyframes meshRing { 0%,100%{transform:scale(1);opacity:.3;} 50%{transform:scale(1.3);opacity:.05;} }
+  .mesh-line {
+    position: absolute; top: 50%; height: 1px;
+    background: linear-gradient(90deg, rgba(59,130,246,.6), rgba(6,182,212,.4));
+    transform-origin: left center;
+  }
+
+  /* ── SECTION WRAPPER ── */
+  section { position: relative; z-index: 1; }
+  .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+  .section-header { text-align: center; margin-bottom: 4rem; }
+  .section-tag {
+    display: inline-block; font-size: .75rem; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: #60a5fa;
+    border: 1px solid rgba(96,165,250,.3); padding: .25rem .75rem; border-radius: 999px;
+    margin-bottom: 1rem; background: rgba(37,99,235,.08);
+  }
+  .section-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }
+  .section-desc { font-size: 1.05rem; color: var(--muted); max-width: 600px; margin: 1rem auto 0; }
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0 auto; }
+
+  /* ── PROBLEM ── */
+  #problem { padding: 8rem 0; }
+  .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .problem-visual {
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .event-card {
+    padding: 1.25rem 1.5rem; border-radius: 14px;
+    border: 1px solid; background: rgba(255,255,255,.02);
+    display: flex; align-items: center; gap: 1rem;
+    transition: transform .3s;
+  }
+  .event-card:hover { transform: translateX(8px); }
+  .event-card.flood { border-color: rgba(59,130,246,.4); }
+  .event-card.fire { border-color: rgba(239,68,68,.4); }
+  .event-card.smog { border-color: rgba(234,179,8,.4); }
+  .event-icon { font-size: 1.8rem; width: 48px; text-align: center; flex-shrink: 0; }
+  .event-info h4 { font-weight: 700; font-size: .95rem; }
+  .event-info p { font-size: .82rem; color: var(--muted); margin-top: .2rem; }
+  .event-badge { margin-left: auto; font-size: .7rem; font-weight: 700; padding: .2rem .6rem; border-radius: 6px; }
+  .badge-red { background: rgba(220,38,38,.2); color: #fca5a5; }
+  .badge-amber { background: rgba(234,179,8,.2); color: #fde047; }
+
+  .problem-text h2 { font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 1.5rem; }
+  .problem-text p { color: var(--muted); margin-bottom: 1.5rem; }
+  .problem-text ul { list-style: none; display: flex; flex-direction: column; gap: .75rem; }
+  .problem-text li { display: flex; align-items: flex-start; gap: .75rem; }
+  .check { width: 22px; height: 22px; border-radius: 50%; background: rgba(22,163,74,.2); border: 1px solid rgba(22,163,74,.4); display:flex;align-items:center;justify-content:center; flex-shrink:0; margin-top:.15rem; font-size:.7rem; color: #86efac; }
+
+  /* ── ARCHITECTURE ── */
+  #architecture { padding: 8rem 0; background: linear-gradient(180deg, transparent, rgba(15,23,42,.5), transparent); }
+  .arch-flow {
+    display: flex; align-items: center; justify-content: center; gap: 0;
+    flex-wrap: wrap; margin-top: 3rem; gap: 0;
+  }
+  .arch-node {
+    display: flex; flex-direction: column; align-items: center; gap: .5rem;
+    padding: 1.5rem 2rem; border-radius: 16px;
+    border: 1px solid var(--border); background: var(--card);
+    text-align: center; min-width: 130px;
+    transition: transform .3s, border-color .3s, box-shadow .3s;
+  }
+  .arch-node:hover { transform: translateY(-6px); border-color: #3b82f6; box-shadow: 0 20px 60px rgba(37,99,235,.2); }
+  .arch-node-icon { font-size: 2rem; }
+  .arch-node-label { font-size: .8rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+  .arch-node-tech { font-size: .7rem; color: var(--muted); }
+  .arch-arrow {
+    font-size: 1.5rem; color: #3b82f6; padding: 0 .5rem;
+    flex-shrink: 0;
+    animation: arrowPulse 2s ease-in-out infinite;
+  }
+  @keyframes arrowPulse { 0%,100%{opacity:.4;transform:translateX(0);} 50%{opacity:1;transform:translateX(4px);} }
+
+  /* ── FEATURES ── */
+  #features { padding: 8rem 0; }
+  .features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+  .feature-card {
+    padding: 2rem; border-radius: 20px;
+    border: 1px solid var(--border); background: var(--card);
+    transition: transform .35s, border-color .35s, box-shadow .35s;
+    position: relative; overflow: hidden;
+  }
+  .feature-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--card-accent, #3b82f6), transparent);
+    opacity: 0; transition: opacity .35s;
+  }
+  .feature-card:hover { transform: translateY(-8px); border-color: rgba(59,130,246,.4); box-shadow: 0 30px 80px rgba(0,0,0,.3); }
+  .feature-card:hover::before { opacity: 1; }
+  .feature-icon-wrap {
+    width: 56px; height: 56px; border-radius: 14px; font-size: 1.5rem;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;
+  }
+  .feature-title { font-size: 1.05rem; font-weight: 700; margin-bottom: .5rem; }
+  .feature-desc { font-size: .88rem; color: var(--muted); line-height: 1.65; }
+
+  /* ── AI MODELS ── */
+  #ai { padding: 8rem 0; background: linear-gradient(180deg, transparent, rgba(15,23,42,.6), transparent); }
+  .ai-tiers { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .ai-tier {
+    padding: 2.5rem; border-radius: 20px; border: 1px solid var(--border);
+    background: var(--card); position: relative; overflow: hidden;
+    transition: transform .35s, box-shadow .35s;
+  }
+  .ai-tier:hover { transform: translateY(-6px); box-shadow: 0 30px 80px rgba(0,0,0,.3); }
+  .ai-tier-badge {
+    display: inline-block; padding: .25rem .75rem; border-radius: 999px;
+    font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .ai-tier-title { font-size: 1.3rem; font-weight: 800; margin-bottom: .75rem; }
+  .ai-tier-desc { font-size: .9rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .ai-specs { display: flex; flex-direction: column; gap: .6rem; }
+  .ai-spec { display: flex; justify-content: space-between; align-items: center; padding: .5rem .75rem; background: rgba(255,255,255,.03); border-radius: 8px; border: 1px solid var(--border); font-size: .82rem; }
+  .ai-spec-key { color: var(--muted); }
+  .ai-spec-val { font-weight: 700; font-family: monospace; color: #60a5fa; }
+  .corner-glow { position:absolute; width:200px; height:200px; border-radius:50%; filter:blur(60px); pointer-events:none; }
+
+  /* ── TECH STACK ── */
+  #tech { padding: 8rem 0; }
+  .stack-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
+  .stack-card {
+    padding: 1.5rem; border-radius: 14px; border: 1px solid var(--border);
+    background: var(--card); text-align: center;
+    transition: transform .3s, border-color .3s;
+  }
+  .stack-card:hover { transform: translateY(-4px); border-color: rgba(59,130,246,.4); }
+  .stack-icon { font-size: 1.8rem; margin-bottom: .5rem; }
+  .stack-name { font-weight: 700; font-size: .9rem; }
+  .stack-layer { font-size: .72rem; color: var(--muted); margin-top: .2rem; }
+
+  /* ── SCREENS PREVIEW ── */
+  #screens { padding: 8rem 0; background: linear-gradient(180deg, transparent, rgba(15,23,42,.5), transparent); }
+  .screens-tabs { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+  .tab-btn {
+    padding: .5rem 1.25rem; border-radius: 8px; border: 1px solid var(--border);
+    background: transparent; color: var(--muted); font-size: .85rem; font-weight: 600; cursor: pointer;
+    transition: all .2s;
+  }
+  .tab-btn.active, .tab-btn:hover { border-color: #3b82f6; background: rgba(37,99,235,.1); color: var(--text); }
+  .screens-preview {
+    max-width: 900px; margin: 0 auto; border-radius: 20px;
+    border: 1px solid var(--border); overflow: hidden;
+    box-shadow: 0 40px 120px rgba(0,0,0,.5);
+  }
+  .screen-bar {
+    display: flex; align-items: center; gap: .5rem; padding: .75rem 1rem;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+  }
+  .screen-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .screen-url { margin-left: .5rem; font-family: monospace; font-size: .8rem; color: var(--muted); }
+  .screen-content { background: #0a0f1e; padding: 1.5rem; min-height: 380px; display: flex; flex-direction: column; gap: 1rem; }
+  /* Simulated Dashboard */
+  .sim-topbar { display:flex; gap:.75rem; align-items:center; padding:.75rem 1rem; background:rgba(220,38,38,.1); border:1px solid rgba(220,38,38,.3); border-radius:10px; }
+  .sim-dot { width:8px; height:8px; border-radius:50%; background:#dc2626; animation:blink 1s infinite; }
+  @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+  .sim-topbar-text { font-size:.8rem; font-weight:700; color:#fca5a5; }
+  .sim-cols { display:grid; grid-template-columns:200px 1fr 200px; gap:1rem; flex:1; }
+  .sim-panel { border-radius:10px; border:1px solid var(--border); background:rgba(255,255,255,.02); padding:.75rem; overflow:hidden; }
+  .sim-panel-title { font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:#60a5fa; margin-bottom:.75rem; }
+  .sim-node-row { display:flex; align-items:center; gap:.5rem; padding:.4rem; border-radius:6px; background:rgba(255,255,255,.02); margin-bottom:.4rem; }
+  .sim-node-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .sim-node-text { font-size:.67rem; flex:1; overflow:hidden; }
+  .sim-alert-card { padding:.6rem; border-radius:8px; border:1px solid rgba(220,38,38,.4); background:rgba(220,38,38,.06); margin-bottom:.5rem; }
+  .sim-alert-title { font-size:.67rem; font-weight:700; color:#fca5a5; }
+  .sim-alert-meta { font-size:.6rem; color:var(--muted); margin-top:.15rem; }
+  .sim-map { background: linear-gradient(135deg, #0a1628 0%, #0f1f3a 100%); border-radius:8px; height:100%; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .sim-map-node { position:absolute; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.6rem; font-weight:700; border:2px solid; }
+  .sim-map-node.alert { border-color:#dc2626; background:rgba(220,38,38,.3); animation:nodePulse 1.5s infinite; }
+  .sim-map-node.normal { border-color:#16a34a; background:rgba(22,163,74,.2); }
+  .sim-map-node.warn { border-color:#eab308; background:rgba(234,179,8,.2); }
+  @keyframes nodePulse { 0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.5);} 50%{box-shadow:0 0 0 12px rgba(220,38,38,0);} }
+
+  /* ── METRICS ── */
+  #metrics { padding: 8rem 0; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; }
+  .metric-card {
+    padding: 2rem; border-radius: 20px; border: 1px solid var(--border);
+    background: var(--card); text-align: center;
+    transition: transform .35s, border-color .35s;
+  }
+  .metric-card:hover { transform: translateY(-6px); border-color: rgba(59,130,246,.4); }
+  .metric-icon { font-size: 2.5rem; margin-bottom: .75rem; }
+  .metric-num { font-size: 2.5rem; font-weight: 900; line-height: 1; margin-bottom: .25rem; }
+  .metric-label { font-size: .85rem; color: var(--muted); }
+
+  /* ── TEAM CTA ── */
+  #cta { padding: 8rem 0; }
+  .cta-inner {
+    text-align: center; max-width: 700px; margin: 0 auto; padding: 5rem 3rem;
+    border-radius: 32px; border: 1px solid rgba(37,99,235,.3);
+    background: linear-gradient(135deg, rgba(37,99,235,.08), rgba(124,58,237,.05), rgba(6,182,212,.05));
+    position: relative; overflow: hidden;
+  }
+  .cta-inner::before {
+    content:''; position:absolute; inset:0; border-radius:32px;
+    background: radial-gradient(circle at 50% -20%, rgba(37,99,235,.2), transparent 60%);
+    pointer-events:none;
+  }
+  .cta-title { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 1rem; line-height: 1.1; }
+  .cta-desc { color: var(--muted); font-size: 1.05rem; margin-bottom: 2.5rem; }
+  .cta-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border); padding: 3rem 2rem;
+    text-align: center; color: var(--muted); font-size: .85rem;
+    position: relative; z-index: 1;
+  }
+  footer .footer-brand { font-weight: 700; color: var(--text); margin-bottom: .5rem; font-size: 1rem; }
+  footer .footer-links { display: flex; gap: 2rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap; }
+  footer .footer-links a { color: var(--muted); text-decoration: none; transition: color .2s; }
+  footer .footer-links a:hover { color: var(--text); }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left { opacity: 0; transform: translateX(-50px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right { opacity: 0; transform: translateX(50px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+  .reveal-scale { opacity: 0; transform: scale(.92); transition: opacity .7s ease, transform .7s ease; }
+  .reveal-scale.visible { opacity: 1; transform: scale(1); }
+  .stagger > * { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+  .stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:.05s; }
+  .stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:.15s; }
+  .stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:.25s; }
+  .stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:.35s; }
+  .stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:.45s; }
+  .stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay:.55s; }
+
+  @keyframes fadeSlideDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .problem-grid { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .ai-tiers { grid-template-columns: 1fr; }
+    .stack-grid { grid-template-columns: repeat(2,1fr); }
+    .metrics-grid { grid-template-columns: repeat(2,1fr); }
+    .sim-cols { grid-template-columns: 1fr; }
+    .arch-arrow { display: none; }
+    .arch-flow { gap: 1rem; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    .features-grid, .stack-grid, .metrics-grid { grid-template-columns: 1fr; }
+    h1.hero-title { font-size: 2.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg-grid"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- ─────────── NAVBAR ─────────── -->
+<nav>
+  <a href="#" class="nav-brand">
+    <div class="nav-logo">🛡️</div>
+    <div>
+      <span class="nav-title" style="background:linear-gradient(135deg,#60a5fa,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">AEGISNET</span>
+      <span class="nav-badge" style="margin-left:.5rem;">SIH26178</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#problem">Problem</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#features">Features</a>
+    <a href="#ai">AI Models</a>
+    <a href="#tech">Tech Stack</a>
+  </div>
+  <a href="#cta" class="nav-cta">Launch Dashboard →</a>
+</nav>
+
+<!-- ─────────── HERO ─────────── -->
+<section id="hero">
+  <div class="hero-chip">
+    <span class="dot"></span>
+    Qualcomm · SIH26178 · Edge-AI / IoT
+  </div>
+
+  <h1 class="hero-title">
+    <span class="gradient-text">AI-Powered Edge</span><br/>
+    Environmental Guardian
+  </h1>
+
+  <p class="hero-sub">
+    AegisNet deploys a decentralised mesh of ESP32 sensor nodes across flood-prone river catchments, forests, and industrial zones — processing real-time AI risk scores on-device and correlating them in the cloud to deliver life-saving early warnings before disasters escalate.
+  </p>
+
+  <div class="hero-actions">
+    <a href="http://localhost:5180/dashboard" class="btn-primary">🚀 Open Command Dashboard</a>
+    <a href="https://github.com/pateladil910/Aegisnet_SIH2026" class="btn-secondary" target="_blank">⭐ GitHub Repo</a>
+    <a href="http://localhost:8001/docs" class="btn-secondary" target="_blank">📡 AI Service API Docs</a>
+  </div>
+
+  <!-- Animated Mesh Network Visualisation -->
+  <div class="mesh-canvas" id="meshCanvas">
+    <!-- Nodes & lines rendered by JS -->
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num gradient-flood">5</div>
+      <div class="stat-label">Edge Sensor Nodes</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num gradient-text">&lt;200ms</div>
+      <div class="stat-label">On-Device Inference</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num gradient-fire">3</div>
+      <div class="stat-label">Hazard Types Covered</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" style="background:linear-gradient(135deg,#16a34a,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">6h</div>
+      <div class="stat-label">Predictive Forecast</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num gradient-smog">100%</div>
+      <div class="stat-label">Mesh Uptime</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="max-width:900px;"></div>
+
+<!-- ─────────── PROBLEM ─────────── -->
+<section id="problem">
+  <div class="section-inner">
+    <div class="problem-grid">
+      <div class="problem-visual reveal-left">
+        <div class="event-card flood">
+          <div class="event-icon">🌊</div>
+          <div class="event-info">
+            <h4>Flash Flood — Tapi River Basin</h4>
+            <p>Water level +58 cm in 40 minutes. Zero advance warning.</p>
+          </div>
+          <span class="event-badge badge-red">CRITICAL</span>
+        </div>
+        <div class="event-card fire">
+          <div class="event-icon">🔥</div>
+          <div class="event-info">
+            <h4>Wildfire — Forest Perimeter</h4>
+            <p>Temperature spike to 51°C. Detected 4 hours too late.</p>
+          </div>
+          <span class="event-badge badge-red">HIGH RISK</span>
+        </div>
+        <div class="event-card smog">
+          <div class="event-icon">🌫️</div>
+          <div class="event-info">
+            <h4>Industrial AQI Breach — Sachin Zone</h4>
+            <p>AQI crossed 350. Communities alerted hours after exposure.</p>
+          </div>
+          <span class="event-badge badge-amber">WATCH</span>
+        </div>
+        <div style="padding:1rem 1.5rem; border-radius:12px; background:rgba(37,99,235,.08); border:1px solid rgba(37,99,235,.2); font-size:.85rem; color:var(--muted); margin-top:.5rem;">
+          💡 <strong style="color:var(--text);">AegisNet's edge AI detects all three in real-time</strong> — before they become disasters.
+        </div>
+      </div>
+
+      <div class="problem-text reveal-right">
+        <div class="section-tag">The Problem</div>
+        <h2 class="section-title">Disasters strike faster than traditional monitoring responds</h2>
+        <p>India loses thousands of lives annually to environmental disasters that could be mitigated with early warning. Existing IoT solutions rely on centralised cloud processing — a fatal flaw when connectivity fails exactly when it's most needed.</p>
+        <ul>
+          <li><span class="check">✓</span><span>Cloud-dependent systems go dark when mobile towers flood or burn</span></li>
+          <li><span class="check">✓</span><span>Single sensors produce false positives — cooking smoke triggering wildfire sirens</span></li>
+          <li><span class="check">✓</span><span>Manual threshold checks create dangerous delays during multi-site surges</span></li>
+          <li><span class="check">✓</span><span>No spatial correlation — a flooded upstream node can't warn downstream communities</span></li>
+          <li><span class="check">✓</span><span>Authorities lack real-time AI confidence scores for escalation decisions</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="max-width:900px;"></div>
+
+<!-- ─────────── ARCHITECTURE ─────────── -->
+<section id="architecture">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">System Architecture</div>
+      <h2 class="section-title">From sensor to screen in <span class="gradient-text">milliseconds</span></h2>
+      <p class="section-desc">A resilient, multi-hop architecture that keeps monitoring alive even when the internet goes down.</p>
+    </div>
+
+    <div class="arch-flow stagger">
+      <div class="arch-node">
+        <div class="arch-node-icon">🔬</div>
+        <div class="arch-node-label">Edge Sensors</div>
+        <div class="arch-node-tech">ESP32 + HC-SR04<br/>MQ135 + DHT22</div>
+      </div>
+      <div class="arch-arrow">⟶</div>
+      <div class="arch-node">
+        <div class="arch-node-icon">🧠</div>
+        <div class="arch-node-label">On-Device AI</div>
+        <div class="arch-node-tech">TinyML · Rate-of-Change<br/>0–100 Risk Score</div>
+      </div>
+      <div class="arch-arrow">⟶</div>
+      <div class="arch-node">
+        <div class="arch-node-icon">📡</div>
+        <div class="arch-node-label">LoRa Mesh</div>
+        <div class="arch-node-tech">SX1278 · 433MHz<br/>Flood-Routing Protocol</div>
+      </div>
+      <div class="arch-arrow">⟶</div>
+      <div class="arch-node">
+        <div class="arch-node-icon">🌐</div>
+        <div class="arch-node-label">Gateway</div>
+        <div class="arch-node-tech">Pi 4 / ESP32<br/>WiFi · 4G Bridge</div>
+      </div>
+      <div class="arch-arrow">⟶</div>
+      <div class="arch-node">
+        <div class="arch-node-icon">⚡</div>
+        <div class="arch-node-label">Cloud AI</div>
+        <div class="arch-node-tech">FastAPI · Correlation<br/>6-Hour Forecast</div>
+      </div>
+      <div class="arch-arrow">⟶</div>
+      <div class="arch-node" style="border-color:rgba(37,99,235,.5);background:rgba(37,99,235,.08);">
+        <div class="arch-node-icon">🖥️</div>
+        <div class="arch-node-label">Dashboard</div>
+        <div class="arch-node-tech">React 18 · Socket.IO<br/>Live Map + Alerts</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="max-width:900px;"></div>
+
+<!-- ─────────── FEATURES ─────────── -->
+<section id="features">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">Core Features</div>
+      <h2 class="section-title">Every layer engineered for <span class="gradient-text">resilience</span></h2>
+      <p class="section-desc">AegisNet works when conventional systems fail — autonomously, intelligently, and in real time.</p>
+    </div>
+
+    <div class="features-grid stagger">
+      <div class="feature-card" style="--card-accent:#3b82f6;">
+        <div class="feature-icon-wrap" style="background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);">🌊</div>
+        <div class="feature-title">Flood Surge Detection</div>
+        <div class="feature-desc">Ultrasonic HC-SR04 sensors track water level with 1mm precision. Rate-of-change edge AI detects flash surge within 2 seconds of threshold breach — no cloud dependency required.</div>
+      </div>
+
+      <div class="feature-card" style="--card-accent:#ef4444;">
+        <div class="feature-icon-wrap" style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);">🔥</div>
+        <div class="feature-title">Wildfire Early Warning</div>
+        <div class="feature-desc">Multi-sensor fusion (IR flame sensor + MQ135 + DHT22 thermal) cross-validates ignition signatures. AI false-positive filter distinguishes wildfire from cooking smoke before any alarm fires.</div>
+      </div>
+
+      <div class="feature-card" style="--card-accent:#eab308;">
+        <div class="feature-icon-wrap" style="background:rgba(234,179,8,.15);border:1px solid rgba(234,179,8,.3);">🌫️</div>
+        <div class="feature-title">Industrial AQI Monitoring</div>
+        <div class="feature-desc">MQ135 sensors continuously monitor particulate matter and hazardous gas concentrations. AQI breach events trigger tiered escalation with multilingual SMS alerts in Hindi and English.</div>
+      </div>
+
+      <div class="feature-card" style="--card-accent:#06b6d4;">
+        <div class="feature-icon-wrap" style="background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.3);">📡</div>
+        <div class="feature-title">LoRa Mesh Networking</div>
+        <div class="feature-desc">Self-healing multi-hop LoRa network on 433MHz. Nodes relay packets through available neighbours when direct paths fail. Upstream sensor can alert downstream community nodes autonomously.</div>
+      </div>
+
+      <div class="feature-card" style="--card-accent:#7c3aed;">
+        <div class="feature-icon-wrap" style="background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);">🧠</div>
+        <div class="feature-title">Spatial Correlation AI</div>
+        <div class="feature-desc">Inverse Distance Weighted (IDW) correlation engine analyses risk trends across neighbouring nodes within a 15km catchment radius. Computes Area Probability Index for actionable geo-level alerts.</div>
+      </div>
+
+      <div class="feature-card" style="--card-accent:#16a34a;">
+        <div class="feature-icon-wrap" style="background:rgba(22,163,74,.15);border:1px solid rgba(22,163,74,.3);">☀️</div>
+        <div class="feature-title">Solar-Powered Autonomy</div>
+        <div class="feature-desc">Each field node integrates a solar charging circuit for indefinite deployment. Battery state, charging status, and RSSI signal strength are broadcast with every telemetry heartbeat packet.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="max-width:900px;"></div>
+
+<!-- ─────────── LIVE DASHBOARD PREVIEW ─────────── -->
+<section id="screens">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">Command Dashboard</div>
+      <h2 class="section-title">A control room built for <span class="gradient-text">crisis conditions</span></h2>
+      <p class="section-desc">Dark-mode ops interface designed for instant comprehension under high cognitive load — not a generic admin panel.</p>
+    </div>
+
+    <div class="screens-preview reveal-scale">
+      <div class="screen-bar">
+        <div class="screen-dot" style="background:#ef4444;"></div>
+        <div class="screen-dot" style="background:#eab308;"></div>
+        <div class="screen-dot" style="background:#16a34a;"></div>
+        <span class="screen-url">localhost:5180/dashboard — AegisNet Command Ops</span>
+      </div>
+      <div class="screen-content">
+        <!-- Simulated Alert Banner -->
+        <div class="sim-topbar">
+          <div class="sim-dot"></div>
+          <span class="sim-topbar-text">⚠ ACTIVE INCIDENT: 1 CRITICAL ALERT — Weir Causeway Checkpoint (node_002) — Flood Surge Detected — LoRa Mesh Active — SMS Dispatched</span>
+        </div>
+
+        <!-- 3 Column Layout -->
+        <div class="sim-cols">
+          <!-- Left: Node List -->
+          <div class="sim-panel">
+            <div class="sim-panel-title">📡 Sensor Nodes (5/5)</div>
+            <div class="sim-node-row">
+              <div class="sim-node-dot" style="background:#dc2626;box-shadow:0 0 6px #dc2626;animation:blink 1s infinite;"></div>
+              <div class="sim-node-text"><div style="font-size:.65rem;font-weight:700;color:#fca5a5;">node_002 · CRITICAL</div><div style="font-size:.6rem;color:#94a3b8;">🌊 88% 🔥 8% 💨 32%</div></div>
+            </div>
+            <div class="sim-node-row">
+              <div class="sim-node-dot" style="background:#16a34a;"></div>
+              <div class="sim-node-text"><div style="font-size:.65rem;font-weight:700;color:#86efac;">node_001 · NORMAL</div><div style="font-size:.6rem;color:#94a3b8;">🌊 22% 🔥 5% 💨 18%</div></div>
+            </div>
+            <div class="sim-node-row">
+              <div class="sim-node-dot" style="background:#eab308;"></div>
+              <div class="sim-node-text"><div style="font-size:.65rem;font-weight:700;color:#fde047;">node_003 · WATCH</div><div style="font-size:.6rem;color:#94a3b8;">🌊 54% 🔥 6% 💨 20%</div></div>
+            </div>
+            <div class="sim-node-row">
+              <div class="sim-node-dot" style="background:#16a34a;"></div>
+              <div class="sim-node-text"><div style="font-size:.65rem;font-weight:700;color:#86efac;">node_004 · NORMAL</div><div style="font-size:.6rem;color:#94a3b8;">🌊 10% 🔥 15% 💨 48%</div></div>
+            </div>
+            <div class="sim-node-row">
+              <div class="sim-node-dot" style="background:#16a34a;"></div>
+              <div class="sim-node-text"><div style="font-size:.65rem;font-weight:700;color:#86efac;">node_005 · NORMAL</div><div style="font-size:.6rem;color:#94a3b8;">🌊 5% 🔥 25% 💨 12%</div></div>
+            </div>
+          </div>
+
+          <!-- Center: Map -->
+          <div class="sim-panel" style="padding:0;overflow:hidden;">
+            <div class="sim-map">
+              <div class="sim-map-node alert" style="top:40%;left:48%;">02</div>
+              <div class="sim-map-node normal" style="top:25%;left:35%;">01</div>
+              <div class="sim-map-node warn" style="top:55%;left:32%;">03</div>
+              <div class="sim-map-node normal" style="top:70%;left:60%;">04</div>
+              <div class="sim-map-node normal" style="top:20%;left:68%;">05</div>
+              <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;">
+                <line x1="35%" y1="25%" x2="48%" y2="40%" stroke="rgba(59,130,246,.4)" stroke-width="1" stroke-dasharray="3,3"/>
+                <line x1="48%" y1="40%" x2="32%" y2="55%" stroke="rgba(59,130,246,.4)" stroke-width="1" stroke-dasharray="3,3"/>
+                <line x1="48%" y1="40%" x2="60%" y2="70%" stroke="rgba(59,130,246,.3)" stroke-width="1" stroke-dasharray="3,3"/>
+                <line x1="35%" y1="25%" x2="68%" y2="20%" stroke="rgba(59,130,246,.2)" stroke-width="1" stroke-dasharray="3,3"/>
+              </svg>
+              <div style="position:absolute;bottom:.5rem;left:.5rem;font-size:.6rem;color:rgba(148,163,184,.6);">📍 Tapi River Basin · Surat · Gujarat</div>
+            </div>
+          </div>
+
+          <!-- Right: Alert Feed -->
+          <div class="sim-panel">
+            <div class="sim-panel-title">🚨 Alert Feed (Live)</div>
+            <div class="sim-alert-card">
+              <div class="sim-alert-title">🌊 FLOOD ALERT · CRITICAL</div>
+              <div class="sim-alert-meta">node_002 · Risk: 88/100 · Area Prob: 92%</div>
+              <div class="sim-alert-meta" style="margin-top:.2rem;">Corr: node_001 · AI Confirmed</div>
+            </div>
+            <div class="sim-alert-card" style="border-color:rgba(234,179,8,.3);background:rgba(234,179,8,.05);">
+              <div class="sim-alert-title" style="color:#fde047;">💨 AQI WARNING</div>
+              <div class="sim-alert-meta">node_004 · Risk: 78/100 · Area: 65%</div>
+            </div>
+            <div class="sim-alert-card" style="border-color:rgba(148,163,184,.2);background:rgba(148,163,184,.03);">
+              <div class="sim-alert-title" style="color:#94a3b8;">💨 SUPPRESSED · False +ve</div>
+              <div class="sim-alert-meta">node_004 · Cooking smoke filtered by AI</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="max-width:900px;margin-top:6rem;"></div>
+
+<!-- ─────────── AI MODELS ─────────── -->
+<section id="ai">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">AI & Machine Learning</div>
+      <h2 class="section-title">Two-tier intelligence: <span class="gradient-text">Edge + Cloud</span></h2>
+      <p class="section-desc">On-device TinyML for speed and autonomy. Cloud correlation for accuracy and context. Zero single point of failure.</p>
+    </div>
+
+    <div class="ai-tiers stagger">
+      <!-- Tier 1: Edge -->
+      <div class="ai-tier">
+        <div class="corner-glow" style="background:rgba(37,99,235,.2);top:-50px;right:-50px;"></div>
+        <div class="ai-tier-badge" style="background:rgba(37,99,235,.15);color:#93c5fd;border:1px solid rgba(37,99,235,.3);">Level 1 · On-Device</div>
+        <h3 class="ai-tier-title gradient-flood">Edge TinyML Engine</h3>
+        <p class="ai-tier-desc">Runs entirely on the ESP32 microcontroller. No internet connection required. Computes a 0–100 multi-hazard risk vector every sensor cycle using statistical feature extraction and rate-of-change analysis.</p>
+        <div class="ai-specs">
+          <div class="ai-spec"><span class="ai-spec-key">Model Type</span><span class="ai-spec-val">Tier-A Rate-of-Change + Statistical</span></div>
+          <div class="ai-spec"><span class="ai-spec-key">Inference Time</span><span class="ai-spec-val">&lt; 200ms</span></div>
+          <div class="ai-spec"><span class="ai-spec-key">Flash Footprint</span><span class="ai-spec-val">&lt; 50KB</span></div>
+          <div class="ai-spec"><span class="ai-spec-key">Output</span><span class="ai-spec-val">{flood, fire, pollution}: 0–100</span></div>
+          <div class="ai-spec"><span class="ai-spec-key">Framework</span><span class="ai-spec-val">C/C++ · TFLite Micro ready</span></div>
+          <div class="ai-spec"><span class="ai-spec-key">Dependency</span><span class="ai-spec-val">None (cloud-free)</span></div>
+        </div>
+      </div>
+
+      <!-- Tier 2: Cloud -->
+      <div class="ai-tier">
+        <div class="corner-glow" style="background:rgba(124,58,237,.15);bottom:-50px;left:-50px;"></div>
+        <div class="ai-tier-badge" style="background:rgba(124,58,237,.15);color:#c4b5fd;border:1px solid rgba(124,58,237,.3);">Level 2 · Cloud Correlation</div>
+        <h3 class="ai-tier-title" style="background:linear-gradient(135deg,#7c3aed,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">FastAPI Correlation Engine</h3>
+        <p class="ai-tier-desc">Runs on the cloud backend. Cross-correlates multiple nodes spatially using Inverse Distance Weighting, generates 3–6 hour forecast trajectories, and suppresses false positives through multi-sensor fusion validation.</p>
+        <div class="ai-specs">
+          <div class="ai-spec"><span class="ai-spec-key">Spatial Correlation</span><span class="ai-spec-val">IDW within 15km radius</span></div>
+          <div class="ai-spec"><span class="ai-spec-key">Forecasting</span><span class="ai-spec-val">Rate-of-change + 95% CI band</span></div>
+          <div class="ai-spec"><span class="ai-spec-key">False-Positive Filter</span><span class="ai-spec-val">Multi-sensor co-validation</span></div>
+          <div class="ai-spec"><span class="ai-spec-key">Output: Area Prob Index</span><span class="ai-spec-val">0–100% with spatial boost</span></div>
+          <div class="ai-spec"><span class="ai-spec-key">Framework</span><span class="ai-spec-val">Python · FastAPI · NumPy</span></div>
+          <div class="ai-spec"><span class="ai-spec-key">Endpoint</span><span class="ai-spec-val">localhost:8001/docs</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="max-width:900px;margin-top:6rem;"></div>
+
+<!-- ─────────── TECH STACK ─────────── -->
+<section id="tech">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">Technology Stack</div>
+      <h2 class="section-title">Best-in-class tools for every <span class="gradient-text">layer</span></h2>
+    </div>
+
+    <div class="stack-grid stagger">
+      <div class="stack-card">
+        <div class="stack-icon">⚛️</div>
+        <div class="stack-name">React 18</div>
+        <div class="stack-layer">Frontend Framework</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">⚡</div>
+        <div class="stack-name">Vite + TypeScript</div>
+        <div class="stack-layer">Build Toolchain</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">🗺️</div>
+        <div class="stack-name">Leaflet.js</div>
+        <div class="stack-layer">Interactive Maps</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">📊</div>
+        <div class="stack-name">Recharts</div>
+        <div class="stack-layer">Data Visualisation</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">🟢</div>
+        <div class="stack-name">Node.js + Express</div>
+        <div class="stack-layer">Backend API</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">🔌</div>
+        <div class="stack-name">Socket.IO</div>
+        <div class="stack-layer">Real-Time WebSocket</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">🐍</div>
+        <div class="stack-name">FastAPI</div>
+        <div class="stack-layer">AI Microservice</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">📡</div>
+        <div class="stack-name">MQTT / Mosquitto</div>
+        <div class="stack-layer">IoT Message Broker</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">🔬</div>
+        <div class="stack-name">ESP32 + C++</div>
+        <div class="stack-layer">Edge Firmware</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">📻</div>
+        <div class="stack-name">LoRa SX1278</div>
+        <div class="stack-layer">Mesh Radio 433MHz</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">🐳</div>
+        <div class="stack-name">Docker Compose</div>
+        <div class="stack-layer">Infrastructure</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">🎨</div>
+        <div class="stack-name">Tailwind CSS v4</div>
+        <div class="stack-layer">Styling System</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="max-width:900px;margin-top:6rem;"></div>
+
+<!-- ─────────── METRICS ─────────── -->
+<section id="metrics">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">Performance Metrics</div>
+      <h2 class="section-title">Numbers that <span class="gradient-fire">matter in a disaster</span></h2>
+    </div>
+
+    <div class="metrics-grid stagger">
+      <div class="metric-card">
+        <div class="metric-icon">⚡</div>
+        <div class="metric-num gradient-text">&lt;200ms</div>
+        <div class="metric-label">On-device inference latency per ESP32 cycle</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">📡</div>
+        <div class="metric-num gradient-flood">15km</div>
+        <div class="metric-label">Spatial correlation radius for Area Probability Index</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">🔮</div>
+        <div class="metric-num gradient-smog">6 hrs</div>
+        <div class="metric-label">Predictive flood / fire / AQI forecast window</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">🔋</div>
+        <div class="metric-num" style="background:linear-gradient(135deg,#16a34a,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">∞</div>
+        <div class="metric-label">Solar-assisted autonomous field deployment lifetime</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="max-width:900px;margin-top:6rem;"></div>
+
+<!-- ─────────── CTA ─────────── -->
+<section id="cta">
+  <div class="section-inner">
+    <div class="cta-inner reveal-scale">
+      <div class="section-tag" style="margin-bottom:1.5rem;">Ready to Explore</div>
+      <h2 class="cta-title">
+        See AegisNet <span class="gradient-text">in action</span>
+      </h2>
+      <p class="cta-desc">Open the Command Dashboard, trigger a live flood surge or wildfire simulation, and watch the AI correlation engine respond in real time — all running locally on your machine.</p>
+      <div class="cta-links">
+        <a href="http://localhost:5180/dashboard" class="btn-primary">🚀 Launch Command Dashboard</a>
+        <a href="http://localhost:8001/docs" class="btn-secondary" target="_blank">📡 AI Service Swagger</a>
+        <a href="https://github.com/pateladil910/Aegisnet_SIH2026" class="btn-secondary" target="_blank">⭐ GitHub Repository</a>
+      </div>
+
+      <!-- Quick Access Links -->
+      <div style="display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border);">
+        <a href="http://localhost:5180/" style="color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s;" onmouseover="this.style.color='#f1f5f9'" onmouseout="this.style.color=''">🌍 Public Risk Map</a>
+        <a href="http://localhost:5180/alerts" style="color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s;" onmouseover="this.style.color='#f1f5f9'" onmouseout="this.style.color=''">🚨 Alert History</a>
+        <a href="http://localhost:5180/analytics" style="color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s;" onmouseover="this.style.color='#f1f5f9'" onmouseout="this.style.color=''">📊 Analytics & Forecasts</a>
+        <a href="http://localhost:5180/settings/thresholds" style="color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s;" onmouseover="this.style.color='#f1f5f9'" onmouseout="this.style.color=''">⚙️ Threshold Config</a>
+        <a href="http://localhost:5001/health" style="color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s;" onmouseover="this.style.color='#f1f5f9'" onmouseout="this.style.color=''">💚 Backend Health</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── FOOTER ─────────── -->
+<footer>
+  <div class="footer-brand">🛡️ AegisNet — AI-Powered Edge Environmental Monitoring</div>
+  <div style="color:var(--muted);font-size:.82rem;margin-top:.25rem;">
+    Problem Statement SIH26178 · Qualcomm · Hardware / Edge-AI / IoT · Smart India Hackathon 2026
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/pateladil910/Aegisnet_SIH2026" target="_blank">GitHub Repository</a>
+    <a href="http://localhost:5180/dashboard">Command Dashboard</a>
+    <a href="http://localhost:8001/docs">API Documentation</a>
+    <a href="http://localhost:5180/analytics">Risk Analytics</a>
+  </div>
+  <div style="margin-top:1.5rem;font-size:.75rem;color:rgba(148,163,184,.5);">
+    Built with React 18 · Node.js · FastAPI · ESP32 · LoRa · TinyML
+  </div>
+</footer>
+
+<!-- ─────────── SCRIPTS ─────────── -->
+<script>
+// ── Scroll-based reveal animation ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger')
+  .forEach(el => observer.observe(el));
+
+// ── Animated mesh network canvas ──
+(function buildMesh() {
+  const canvas = document.getElementById('meshCanvas');
+  if (!canvas) return;
+
+  const nodes = [
+    { x: 10, y: 50, label: '01', color: '#16a34a', name: 'Tapi North' },
+    { x: 30, y: 25, label: '02', color: '#dc2626', name: 'Weir Causeway', alert: true },
+    { x: 50, y: 65, label: '03', color: '#16a34a', name: 'Singanpore' },
+    { x: 70, y: 35, label: '04', color: '#eab308', name: 'Sachin Industrial' },
+    { x: 90, y: 55, label: '05', color: '#16a34a', name: 'Mandvi Forest' }
+  ];
+
+  const links = [[0,1],[1,2],[0,2],[2,3],[3,4],[1,3]];
+
+  // Draw SVG lines
+  const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;';
+  canvas.style.position = 'relative';
+  canvas.appendChild(svg);
+
+  links.forEach(([a, b]) => {
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1', nodes[a].x + '%');
+    line.setAttribute('y1', nodes[a].y + '%');
+    line.setAttribute('x2', nodes[b].x + '%');
+    line.setAttribute('y2', nodes[b].y + '%');
+    line.setAttribute('stroke', 'rgba(59,130,246,0.35)');
+    line.setAttribute('stroke-width', '1');
+    line.setAttribute('stroke-dasharray', '5 4');
+    svg.appendChild(line);
+
+    // Animated data packet dot
+    const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    circle.setAttribute('r', '3');
+    circle.setAttribute('fill', '#60a5fa');
+    const animEl = document.createElementNS('http://www.w3.org/2000/svg','animateMotion');
+    animEl.setAttribute('dur', (2 + Math.random() * 3).toFixed(1) + 's');
+    animEl.setAttribute('repeatCount', 'indefinite');
+    animEl.setAttribute('begin', (Math.random() * 2).toFixed(1) + 's');
+    const path = document.createElementNS('http://www.w3.org/2000/svg','mpath');
+    const pathEl = document.createElementNS('http://www.w3.org/2000/svg','path');
+    const id = 'path-' + a + '-' + b;
+    pathEl.setAttribute('id', id);
+    pathEl.setAttribute('d',
+      `M ${nodes[a].x}% ${nodes[a].y}% L ${nodes[b].x}% ${nodes[b].y}%`);
+    pathEl.setAttribute('fill','none');
+    svg.appendChild(pathEl);
+    path.setAttribute('href', '#' + id);
+    animEl.appendChild(path);
+    circle.appendChild(animEl);
+    svg.appendChild(circle);
+  });
+
+  // Draw node circles
+  nodes.forEach(n => {
+    const wrap = document.createElement('div');
+    wrap.style.cssText = `
+      position:absolute; left:calc(${n.x}% - 22px); top:calc(${n.y}% - 22px);
+      width:44px; height:44px; border-radius:50%;
+      background:${n.color}22; border:2px solid ${n.color};
+      display:flex; align-items:center; justify-content:center;
+      font-size:.75rem; font-weight:800; color:#fff;
+      cursor:pointer; transition:transform .2s;
+      ${n.alert ? 'animation:nodePulse 1.5s infinite;box-shadow:0 0 0 0 ' + n.color + '88;' : ''}
+    `;
+    wrap.textContent = n.label;
+    wrap.title = n.name;
+    wrap.onmouseenter = () => wrap.style.transform = 'scale(1.2)';
+    wrap.onmouseleave = () => wrap.style.transform = 'scale(1)';
+    canvas.appendChild(wrap);
+  });
+})();
+
+// ── Smooth active nav link highlight on scroll ──
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+  });
+  navLinks.forEach(link => {
+    link.style.color = link.getAttribute('href') === '#' + current ? '#f1f5f9' : '';
+  });
+});
+</script>
+</body>
+</html>
