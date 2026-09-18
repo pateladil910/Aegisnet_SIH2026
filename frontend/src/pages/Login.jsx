@@ -60,24 +60,26 @@ export default function Login() {
   return (
     <div className="relative min-h-screen font-sans overflow-hidden bg-slate-950 flex flex-col justify-between">
 
-      {/* ── CINEMATIC SYSTEM DETECTION & RESCUE THEMED BACKGROUND PHOTO ── */}
+      {/* ── CINEMATIC SYSTEM DETECTION & RESCUE BACKGROUND WITH SLIGHT BLUR ── */}
       <div
-        className="absolute inset-0 bg-cover bg-no-repeat pointer-events-none"
+        className="absolute -inset-4 bg-cover bg-no-repeat pointer-events-none"
         style={{
           backgroundImage: "url('/login-rescue-bg.jpg')",
           backgroundPosition: 'center 38%',
+          filter: 'blur(3px)',
+          transform: 'scale(1.03)',
         }}
       />
 
-      {/* Subtle atmospheric vignette so the artwork shines through vibrantly */}
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-slate-950/45 via-transparent to-slate-950/45" />
+      {/* Subtle atmospheric vignette so the artwork shines through with depth */}
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-slate-950/45 via-transparent to-slate-950/35" />
       <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-slate-950/50 via-transparent to-slate-950/30" />
 
       {/* ── TOP BAR: Clean Minimal Floating Back Navigation ── */}
       <header className="relative z-20 w-full px-6 sm:px-12 py-5 flex items-center justify-between">
         <Link
           to="/"
-          className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-slate-900/50 hover:bg-slate-900/75 border border-white/20 hover:border-white/40 text-xs font-semibold text-white transition-all group backdrop-blur-md shadow-lg"
+          className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 hover:border-white/40 text-xs font-semibold text-white transition-all group backdrop-blur-md shadow-lg"
         >
           <span className="w-6 h-6 rounded-full flex items-center justify-center bg-white/15 text-white group-hover:-translate-x-0.5 transition-transform font-bold text-xs">
             ←
@@ -86,12 +88,12 @@ export default function Login() {
         </Link>
       </header>
 
-      {/* ── MAIN VIEWPORT: Minimalist Brand on Left & Transparent Glass Login Box on Right ── */}
+      {/* ── MAIN VIEWPORT: Minimalist Brand on Left & Truly Transparent Glass Box on Right ── */}
       <main className="relative z-10 flex-1 max-w-7xl mx-auto w-full px-6 sm:px-12 py-4 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16">
 
-        {/* ── LEFT SIDE: Minimalist Brand Title (Zero Clutter) ── */}
+        {/* ── LEFT SIDE: Minimalist Brand Title ── */}
         <div className="hidden lg:flex flex-col justify-end max-w-lg mb-6 space-y-3.5">
-          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-950/55 backdrop-blur-md border border-white/20 text-white shadow-lg w-fit">
+          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-950/50 backdrop-blur-md border border-white/20 text-white shadow-lg w-fit">
             <span className="text-base">🛡️</span>
             <span className="text-xs font-bold font-mono tracking-widest uppercase text-cyan-300">
               AegisNet Command Gateway
@@ -107,14 +109,14 @@ export default function Login() {
           </p>
         </div>
 
-        {/* ── RIGHT SIDE: Premium Transparent Frosted Glass Sign-In Card ── */}
+        {/* ── RIGHT SIDE: Truly Transparent Frosted Glass Sign-In Card ── */}
         <div className="w-full sm:max-w-md lg:max-w-[420px] mx-auto lg:mx-0 my-auto">
-          <div className="w-full bg-slate-950/45 hover:bg-slate-950/50 backdrop-blur-2xl border border-white/20 hover:border-white/30 rounded-3xl p-7 sm:p-9 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.6)] space-y-6 transition-colors">
+          <div className="w-full bg-white/[0.08] hover:bg-white/[0.11] backdrop-blur-xl border border-white/25 hover:border-white/35 rounded-3xl p-7 sm:p-9 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] space-y-6 transition-all">
 
             {/* Header */}
             <div className="space-y-1.5 text-left">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-cyan-300 bg-cyan-500/20 border border-cyan-400/30 px-2.5 py-0.5 rounded-full backdrop-blur-sm">
+                <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-cyan-300 bg-cyan-500/20 border border-cyan-400/30 px-2.5 py-0.5 rounded-full backdrop-blur-md">
                   Agency Sign In
                 </span>
                 <span className="text-[10px] font-mono text-slate-300">
@@ -141,7 +143,7 @@ export default function Login() {
                   <select
                     value={selectedRole}
                     onChange={(e) => setSelectedRole(e.target.value)}
-                    className="w-full bg-slate-900/60 border border-white/20 rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:bg-slate-900/85 focus:outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-500/20 transition-all appearance-none cursor-pointer shadow-inner backdrop-blur-md"
+                    className="w-full bg-white/[0.09] border border-white/20 hover:border-white/30 rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:bg-slate-900/90 focus:outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-500/20 transition-all appearance-none cursor-pointer shadow-inner backdrop-blur-md"
                   >
                     {ROLES.map((r) => (
                       <option key={r.value} value={r.value} className="bg-slate-900 text-white">
@@ -166,7 +168,7 @@ export default function Login() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="officer@agency.gov.in"
-                  className="w-full bg-slate-900/60 border border-white/20 rounded-2xl px-4 py-3 text-xs text-white font-semibold placeholder-slate-400 focus:bg-slate-900/85 focus:outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-500/20 transition-all shadow-inner backdrop-blur-md"
+                  className="w-full bg-white/[0.09] border border-white/20 hover:border-white/30 rounded-2xl px-4 py-3 text-xs text-white font-semibold placeholder-slate-300 focus:bg-white/[0.16] focus:outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-500/20 transition-all shadow-inner backdrop-blur-md"
                 />
               </div>
 
@@ -188,7 +190,7 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="••••••••"
-                  className="w-full bg-slate-900/60 border border-white/20 rounded-2xl px-4 py-3 text-xs text-white font-semibold placeholder-slate-400 focus:bg-slate-900/85 focus:outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-500/20 transition-all shadow-inner backdrop-blur-md"
+                  className="w-full bg-white/[0.09] border border-white/20 hover:border-white/30 rounded-2xl px-4 py-3 text-xs text-white font-semibold placeholder-slate-300 focus:bg-white/[0.16] focus:outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-500/20 transition-all shadow-inner backdrop-blur-md"
                 />
               </div>
 
@@ -217,7 +219,7 @@ export default function Login() {
               <button
                 type="button"
                 onClick={handleDemoBypass}
-                className="w-full py-2.5 px-4 bg-white/10 hover:bg-white/20 border border-white/20 hover:border-cyan-400/40 text-white text-xs font-bold font-mono rounded-full transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer backdrop-blur-md"
+                className="w-full py-2.5 px-4 bg-white/[0.08] hover:bg-white/[0.18] border border-white/20 hover:border-cyan-400/50 text-white text-xs font-bold font-mono rounded-full transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer backdrop-blur-md"
               >
                 <span>⚡</span>
                 <span>Quick Demo Access (GSDMA Duty Chief)</span>
